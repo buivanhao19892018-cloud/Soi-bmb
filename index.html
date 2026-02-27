@@ -1,0 +1,705 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bùi Hào — Lotto ULTRA MASTER (OCR Gate PRO • PHA SAFE)</title>
+  <meta name="theme-color" content="#0b1220" />
+  <style>
+    :root{
+      --bg:#07101f; --card:#0b1730; --card2:#0a142a; --txt:#eaf2ff; --muted:#a9b8d6;
+      --ok:#2dd4bf; --warn:#f59e0b; --bad:#fb7185; --line:rgba(255,255,255,.08);
+      --btn:#2563eb; --btn2:#1f2937;
+      --r:18px;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+    body{ margin:0; background: radial-gradient(1200px 600px at 20% -10%, rgba(37,99,235,.35), transparent 60%),
+                        radial-gradient(900px 600px at 90% 0%, rgba(45,212,191,.25), transparent 60%),
+                        var(--bg);
+          color:var(--txt); }
+    .wrap{ max-width: 980px; margin: 18px auto; padding: 0 14px 40px; }
+    .title{ font-weight: 800; font-size: 22px; line-height:1.2; margin: 10px 0 6px; }
+    .sub{ color: var(--muted); font-size: 13px; margin-bottom: 14px; }
+    .grid{ display:grid; grid-template-columns: 1.2fr .8fr; gap: 12px; }
+    @media (max-width: 920px){ .grid{ grid-template-columns: 1fr; } }
+    .card{ background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+           border:1px solid var(--line); border-radius: var(--r); padding: 14px; box-shadow: 0 12px 35px rgba(0,0,0,.35); }
+    .row{ display:flex; flex-wrap: wrap; gap:10px; align-items:center; }
+    .pill{ padding:8px 10px; border-radius: 999px; border:1px solid var(--line); background: rgba(255,255,255,.04);
+           font-size: 12px; color: var(--muted); display:flex; gap:8px; align-items:center;}
+    .dot{ width:9px; height:9px; border-radius: 99px; background: var(--warn); box-shadow: 0 0 0 3px rgba(245,158,11,.15);}
+    .dot.ok{ background: var(--ok); box-shadow: 0 0 0 3px rgba(45,212,191,.15);}
+    .dot.bad{ background: var(--bad); box-shadow: 0 0 0 3px rgba(251,113,133,.15);}
+    .btn{ border:0; border-radius: 14px; padding: 12px 14px; font-weight: 700; cursor:pointer;
+          background: linear-gradient(180deg, rgba(37,99,235,.95), rgba(37,99,235,.75)); color:white; }
+    .btn.secondary{ background: rgba(255,255,255,.06); border:1px solid var(--line); color: var(--txt); }
+    .btn.danger{ background: linear-gradient(180deg, rgba(239,68,68,.95), rgba(239,68,68,.75)); }
+    .btn:disabled{ opacity:.45; cursor:not-allowed;}
+    input[type="file"]{ display:none; }
+    textarea{ width:100%; min-height: 140px; resize: vertical; padding: 12px; border-radius: 14px;
+              border:1px solid var(--line); background: rgba(0,0,0,.22); color: var(--txt); font-size: 12px; }
+    .kpi{ display:grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px;}
+    @media (max-width: 520px){ .kpi{ grid-template-columns: 1fr; } }
+    .box{ background: rgba(0,0,0,.18); border:1px dashed rgba(255,255,255,.14); border-radius: 14px; padding: 12px; }
+    .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
+    .big{ font-size: 18px; font-weight: 900; letter-spacing: .5px; }
+    .muted{ color: var(--muted); font-size: 12px; }
+    canvas{ width:100%; border-radius: 14px; border:1px solid var(--line); background: rgba(0,0,0,.22); }
+    .two{ display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    @media (max-width: 700px){ .two{ grid-template-columns: 1fr; } }
+    .hr{ height:1px; background: var(--line); margin: 12px 0; }
+    .tag{ display:inline-flex; align-items:center; gap:8px; font-size:12px; padding:6px 10px; border-radius:999px; border:1px solid var(--line); background: rgba(255,255,255,.04); }
+    .tag.ok{ color:#bbfff3; border-color: rgba(45,212,191,.25); }
+    .tag.warn{ color:#ffe3b0; border-color: rgba(245,158,11,.25); }
+    .tag.bad{ color:#ffd0d8; border-color: rgba(251,113,133,.25); }
+    .smallInput{ width:100%; padding:10px 12px; border-radius:14px; border:1px solid var(--line); background: rgba(0,0,0,.22); color: var(--txt); }
+    .help{ font-size: 12px; color: var(--muted); line-height:1.45; }
+    .list{ margin:0; padding-left: 18px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="title">Bùi Hào — Lotto ULTRA MASTER (OCR Gate PRO • PHA SAFE)</div>
+    <div class="sub">Luồng: Upload/Camera → Preprocess (trim/contrast/scale) → OCR 2-pass → Gate ĐB/G7/G6 → PHA SAFE (STOP nếu dữ liệu chưa sạch).</div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="row" style="justify-content:space-between;">
+          <div class="row">
+            <span class="pill"><span id="st_pre" class="dot"></span>Preprocess</span>
+            <span class="pill"><span id="st_ocr" class="dot"></span>OCR</span>
+            <span class="pill"><span id="st_gate" class="dot"></span>Gate</span>
+            <span class="pill"><span id="st_pha" class="dot"></span>PHA SAFE</span>
+          </div>
+          <div class="row">
+            <button class="btn secondary" id="btn_sample">Dán mẫu</button>
+            <button class="btn danger" id="btn_reset">RESET SẠCH</button>
+          </div>
+        </div>
+
+        <div class="hr"></div>
+
+        <div class="row">
+          <label class="btn" for="file" id="btn_upload">📸 Upload nhiều ảnh</label>
+          <input id="file" type="file" accept="image/*" multiple />
+          <button class="btn secondary" id="btn_camera">🎥 Camera</button>
+          <button class="btn secondary" id="btn_stopcam" disabled>⛔ Tắt camera</button>
+          <button class="btn" id="btn_run" disabled>⚡ CHẠY FULL</button>
+        </div>
+
+        <div class="kpi">
+          <div class="box">
+            <div class="muted">Batch</div>
+            <div class="mono big"><span id="k_batch_ok">0</span> OK | <span id="k_batch_fail">0</span> FAIL</div>
+            <div class="muted">Ảnh đã nạp: <span id="k_files">0</span></div>
+          </div>
+          <div class="box">
+            <div class="muted">Save</div>
+            <div class="mono big" id="k_save">empty</div>
+            <div class="muted">Tự lưu localStorage (có thể export/import sau)</div>
+          </div>
+        </div>
+
+        <div class="hr"></div>
+
+        <div class="two">
+          <div>
+            <div class="row" style="justify-content:space-between; margin-bottom:8px;">
+              <div class="tag warn">Preview (auto-trim)</div>
+              <div class="row">
+                <span class="tag">Trim top <span class="mono" id="v_topt">14%</span></span>
+                <span class="tag">Trim bot <span class="mono" id="v_bott">12%</span></span>
+              </div>
+            </div>
+            <canvas id="cv" width="900" height="1200"></canvas>
+            <div class="help" style="margin-top:8px;">
+              Mẹo ảnh: crop sát phần bảng (từ “ĐB” tới “7”). Tránh dính footer tab (Miền Bắc/Trung/Nam) & header quảng cáo.
+              Nếu ảnh dính nhiều thứ → Gate dễ FAIL → dùng Manual Fix.
+            </div>
+
+            <div class="hr"></div>
+
+            <div class="row" style="gap:10px;">
+              <div style="flex:1;">
+                <div class="muted">Manual Date (nếu OCR không bắt được ngày, format YYYY-MM-DD)</div>
+                <input id="manualDate" class="smallInput mono" placeholder="VD: 2026-02-27" />
+              </div>
+              <div style="flex:1;">
+                <div class="muted">Manual Fix (ĐB|G7|G6) — dán số nếu OCR lệch</div>
+                <input id="manualFix" class="smallInput mono" placeholder="VD: DB=83 | G7=57 42 39 13 | G6=247 554 108" />
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="tag">OCR Raw (pass1)</div>
+            <textarea id="raw" class="mono" placeholder="OCR text sẽ hiện ở đây..."></textarea>
+            <div class="hr"></div>
+            <div class="tag">Gate Output (pass2)</div>
+            <textarea id="gateOut" class="mono" placeholder="Gate sẽ tách: DATE, ĐB(2 số), G7(4 số), G6(3 số)..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="tag ok">PHA SAFE • HardLock</div>
+        <div class="help" style="margin-top:8px;">
+          Nguyên tắc: <b>OCR sạch → Gate đúng → mới mở PHA</b>. Nếu thiếu/không chắc → <b>STOP</b>.
+        </div>
+
+        <div class="hr"></div>
+
+        <div class="box">
+          <div class="muted">Chuỗi đã lưu (theo ngày)</div>
+          <div id="chain" class="mono" style="white-space:pre-wrap; font-size:12px; margin-top:8px;"></div>
+        </div>
+
+        <div class="hr"></div>
+
+        <div class="box">
+          <div class="muted">Kết luận PHA (dựng theo dữ liệu sạch)</div>
+          <div id="pha" class="mono" style="white-space:pre-wrap; font-size:13px; margin-top:8px;"></div>
+        </div>
+
+        <div class="hr"></div>
+
+        <div class="box">
+          <div class="muted">Checklist chống lệch ngày / lệch pha</div>
+          <ul class="list help">
+            <li>Ngày phải tăng đúng thứ tự (không trùng, không nhảy lùi).</li>
+            <li>Mỗi ngày: phải có <b>ĐB(2 số)</b> + <b>G7(4 số)</b> + <b>G6(3 số)</b>.</li>
+            <li>Gate fail → dùng Manual Fix, không “đoán” dữ liệu.</li>
+            <li>PHA chưa khóa → không chốt cứng, chỉ đưa kịch bản.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tesseract.js -->
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+
+  <script>
+    // =========================
+    // PWA (single-file fallback)
+    // =========================
+    (function initPWA(){
+      try{
+        const manifest = {
+          name: "Bùi Hào — Lotto ULTRA MASTER",
+          short_name: "Lotto ULTRA",
+          start_url: ".",
+          display: "standalone",
+          background_color: "#07101f",
+          theme_color: "#0b1220",
+          icons: []
+        };
+        const blob = new Blob([JSON.stringify(manifest)], {type:"application/json"});
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("link");
+        link.rel = "manifest";
+        link.href = url;
+        document.head.appendChild(link);
+
+        // Service worker (best-effort). CDN OCR won't be fully offline.
+        if ("serviceWorker" in navigator){
+          const swCode = `
+            self.addEventListener('install', e => { self.skipWaiting(); });
+            self.addEventListener('activate', e => { self.clients.claim(); });
+            self.addEventListener('fetch', e => {
+              // Network-first, fallback cache is minimal in single-file mode
+              e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
+            });
+          `;
+          const swBlob = new Blob([swCode], {type:"text/javascript"});
+          const swUrl = URL.createObjectURL(swBlob);
+          navigator.serviceWorker.register(swUrl).catch(()=>{});
+        }
+      }catch(e){}
+    })();
+
+    // =========================
+    // UI helpers
+    // =========================
+    const $ = (id)=>document.getElementById(id);
+    const st = {
+      pre: $("st_pre"), ocr: $("st_ocr"), gate: $("st_gate"), pha: $("st_pha"),
+      raw: $("raw"), gateOut: $("gateOut"),
+      chain: $("chain"), phaOut: $("pha"),
+      k_files: $("k_files"), k_ok: $("k_batch_ok"), k_fail: $("k_batch_fail"), k_save: $("k_save"),
+      cv: $("cv"), ctx: $("cv").getContext("2d"),
+      v_topt: $("v_topt"), v_bott: $("v_bott"),
+      manualDate: $("manualDate"), manualFix: $("manualFix"),
+      btn_run: $("btn_run"), btn_camera: $("btn_camera"), btn_stopcam: $("btn_stopcam")
+    };
+
+    function setDot(dotEl, state){
+      dotEl.classList.remove("ok","bad");
+      if(state==="ok") dotEl.classList.add("ok");
+      if(state==="bad") dotEl.classList.add("bad");
+    }
+    function fmtDate(d){
+      const pad=n=>String(n).padStart(2,"0");
+      return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+    }
+    function safeText(s){
+      return (s||"").replace(/[^\S\r\n]+/g," ").replace(/\u00a0/g," ").trim();
+    }
+
+    // =========================
+    // Data store
+    // =========================
+    const STORE_KEY = "BH_ULTRA_CHAIN_V1";
+    let chain = []; // [{date, db2, g7:[..], g6:[..], raw}]
+    loadStore(); renderChain();
+
+    function loadStore(){
+      try{
+        const s = localStorage.getItem(STORE_KEY);
+        chain = s ? JSON.parse(s) : [];
+        st.k_save.textContent = chain.length ? ("days=" + chain.length) : "empty";
+      }catch(e){ chain=[]; st.k_save.textContent="empty"; }
+    }
+    function saveStore(){
+      localStorage.setItem(STORE_KEY, JSON.stringify(chain));
+      st.k_save.textContent = chain.length ? ("days=" + chain.length) : "empty";
+    }
+    function resetAll(){
+      chain = [];
+      saveStore();
+      st.raw.value = "";
+      st.gateOut.value = "";
+      st.manualDate.value = "";
+      st.manualFix.value = "";
+      st.k_ok.textContent = "0";
+      st.k_fail.textContent = "0";
+      st.k_files.textContent = "0";
+      setDot(st.pre,""); setDot(st.ocr,""); setDot(st.gate,""); setDot(st.pha,"");
+      st.ctx.clearRect(0,0,st.cv.width, st.cv.height);
+      renderChain();
+      renderPHA();
+    }
+    $("btn_reset").addEventListener("click", resetAll);
+
+    // =========================
+    // Image input: Upload & Camera
+    // =========================
+    let files = [];
+    let camStream = null;
+    let lastImageBitmap = null;
+
+    $("file").addEventListener("change", async (e)=>{
+      files = Array.from(e.target.files || []);
+      st.k_files.textContent = String(files.length);
+      st.btn_run.disabled = files.length === 0;
+      if(files.length){
+        const bmp = await createImageBitmap(files[0]);
+        lastImageBitmap = bmp;
+        drawPreprocess(bmp);
+      }
+    });
+
+    $("btn_camera").addEventListener("click", async ()=>{
+      try{
+        camStream = await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"}, audio:false});
+        const video = document.createElement("video");
+        video.playsInline = true;
+        video.muted = true;
+        video.srcObject = camStream;
+        await video.play();
+
+        st.btn_camera.disabled = true;
+        st.btn_stopcam.disabled = false;
+
+        // Capture frame every 800ms and show preview
+        const tick = async ()=>{
+          if(!camStream) return;
+          const w = 900, h = 1200;
+          const tmp = document.createElement("canvas");
+          tmp.width = w; tmp.height = h;
+          const tctx = tmp.getContext("2d");
+          // draw video covering canvas
+          const vw = video.videoWidth || 1280, vh = video.videoHeight || 720;
+          const scale = Math.max(w/vw, h/vh);
+          const dw = vw*scale, dh = vh*scale;
+          tctx.drawImage(video, (w-dw)/2, (h-dh)/2, dw, dh);
+
+          const blob = await new Promise(res=>tmp.toBlob(res,"image/jpeg",0.92));
+          const f = new File([blob], `camera_${Date.now()}.jpg`, {type:"image/jpeg"});
+          files = [f];
+          st.k_files.textContent = "1";
+          st.btn_run.disabled = false;
+          const bmp = await createImageBitmap(blob);
+          lastImageBitmap = bmp;
+          drawPreprocess(bmp);
+          setTimeout(tick, 800);
+        };
+        tick();
+      }catch(e){
+        alert("Camera không mở được. Hãy cấp quyền hoặc dùng Upload ảnh.");
+      }
+    });
+
+    $("btn_stopcam").addEventListener("click", ()=>{
+      if(camStream){
+        camStream.getTracks().forEach(t=>t.stop());
+        camStream = null;
+      }
+      st.btn_camera.disabled = false;
+      st.btn_stopcam.disabled = true;
+    });
+
+    // =========================
+    // Preprocess (safe trim + contrast + scale)
+    // =========================
+    let trimTop = 0.14;   // % crop top
+    let trimBot = 0.12;   // % crop bottom
+
+    function drawPreprocess(bmp){
+      setDot(st.pre,"");
+      const W = st.cv.width, H = st.cv.height;
+      st.ctx.clearRect(0,0,W,H);
+
+      // crop region
+      const sy = Math.floor(bmp.height * trimTop);
+      const sh = Math.floor(bmp.height * (1 - trimTop - trimBot));
+      const sx = 0;
+      const sw = bmp.width;
+
+      // draw crop scaled to canvas
+      st.ctx.drawImage(bmp, sx, sy, sw, sh, 0, 0, W, H);
+
+      // increase contrast (simple)
+      const img = st.ctx.getImageData(0,0,W,H);
+      const d = img.data;
+      // contrast factor
+      const c = 1.18; // mild
+      for(let i=0;i<d.length;i+=4){
+        // grayscale-ish enhance
+        const r=d[i], g=d[i+1], b=d[i+2];
+        let y = 0.299*r + 0.587*g + 0.114*b;
+        y = (y-128)*c + 128;
+        y = Math.max(0, Math.min(255, y));
+        d[i]=d[i+1]=d[i+2]=y;
+      }
+      st.ctx.putImageData(img,0,0);
+
+      setDot(st.pre,"ok");
+      st.v_topt.textContent = Math.round(trimTop*100) + "%";
+      st.v_bott.textContent = Math.round(trimBot*100) + "%";
+    }
+
+    // =========================
+    // OCR 2-pass + Gate
+    // =========================
+    async function ocrCanvasText(canvas){
+      const { data } = await Tesseract.recognize(canvas, "eng", {
+        logger: m => {
+          // optional progress
+        }
+      });
+      return safeText(data.text);
+    }
+
+    function normalizeDigits(text){
+      // Fix common OCR confusions
+      return text
+        .replace(/[OQD]/g, "0")
+        .replace(/[Il|]/g, "1")
+        .replace(/S/g, "5")
+        .replace(/B/g, "8");
+    }
+
+    function extractDate(text){
+      // Try dd/mm/yyyy
+      const t = text;
+      const m = t.match(/(\d{1,2})\s*[\/\-]\s*(\d{1,2})\s*[\/\-]\s*(\d{4})/);
+      if(m){
+        const dd = String(m[1]).padStart(2,"0");
+        const mm = String(m[2]).padStart(2,"0");
+        const yy = m[3];
+        return `${yy}-${mm}-${dd}`;
+      }
+      // fallback manual
+      const manual = (st.manualDate.value||"").trim();
+      if(/^\d{4}-\d{2}-\d{2}$/.test(manual)) return manual;
+      return null;
+    }
+
+    function extractDB2(text){
+      // Prefer: "DB" or "ĐB" + 5 digits
+      const t = text;
+      const m = t.match(/(?:ĐB|DB)\s*[:\-]?\s*(\d{5})/i);
+      if(m) return m[1].slice(-2);
+
+      // fallback: any isolated 5-digit that is likely DB (largest/first in lines)
+      // pick first 5-digit that appears after "DB/ĐB" missing due to OCR
+      const all = [...t.matchAll(/\b(\d{5})\b/g)].map(x=>x[1]);
+      if(all.length) return all[0].slice(-2);
+      return null;
+    }
+
+    function extractG7(text){
+      // G7 row often has 4 two-digit numbers
+      // Try pattern "7" line: "7 57 42 39 13" OR just "57 42 39 13"
+      const lines = text.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+
+      // pass A: find line containing 4 two-digit numbers
+      for(let i=lines.length-1; i>=0; i--){
+        const nums = lines[i].match(/\b\d{2}\b/g);
+        if(nums && nums.length >= 4){
+          // choose last 4
+          return nums.slice(-4);
+        }
+      }
+      return null;
+    }
+
+    function extractG6(text){
+      // G6 row often has 3 three-digit numbers (may appear close to bottom)
+      const lines = text.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+      // Search near bottom up, find 3x3-digit
+      for(let i=lines.length-1; i>=0; i--){
+        const nums = lines[i].match(/\b\d{3}\b/g);
+        if(nums && nums.length >= 3){
+          return nums.slice(0,3);
+        }
+      }
+      return null;
+    }
+
+    function applyManualFix(obj){
+      const s = (st.manualFix.value||"").trim();
+      if(!s) return obj;
+      // Accept formats:
+      // DB=83 | G7=57 42 39 13 | G6=247 554 108
+      const up = s.toUpperCase();
+      const mDB = up.match(/DB\s*=\s*(\d{2})/);
+      const mG7 = up.match(/G7\s*=\s*([0-9 ]{8,})/);
+      const mG6 = up.match(/G6\s*=\s*([0-9 ]{8,})/);
+      if(mDB) obj.db2 = mDB[1];
+      if(mG7){
+        const arr = mG7[1].trim().match(/\b\d{2}\b/g);
+        if(arr && arr.length>=4) obj.g7 = arr.slice(0,4);
+      }
+      if(mG6){
+        const arr = mG6[1].trim().match(/\b\d{3}\b/g);
+        if(arr && arr.length>=3) obj.g6 = arr.slice(0,3);
+      }
+      return obj;
+    }
+
+    function gateValidate(obj){
+      const errs = [];
+      if(!obj.date) errs.push("MISS_DATE");
+      if(!obj.db2 || !/^\d{2}$/.test(obj.db2)) errs.push("MISS_DB2");
+      if(!obj.g7 || obj.g7.length !== 4 || obj.g7.some(x=>!/^\d{2}$/.test(x))) errs.push("MISS_G7");
+      if(!obj.g6 || obj.g6.length !== 3 || obj.g6.some(x=>!/^\d{3}$/.test(x))) errs.push("MISS_G6");
+      return errs;
+    }
+
+    function upsertDay(obj){
+      // unique by date
+      const idx = chain.findIndex(x=>x.date === obj.date);
+      if(idx >= 0) chain[idx] = obj;
+      else chain.push(obj);
+
+      // sort by date
+      chain.sort((a,b)=> a.date.localeCompare(b.date));
+      saveStore();
+      renderChain();
+      renderPHA();
+    }
+
+    // =========================
+    // PHA SAFE (HardLock minimal)
+    // =========================
+    function renderChain(){
+      if(!chain.length){
+        st.chain.textContent = "(chưa có dữ liệu)";
+        return;
+      }
+      st.chain.textContent = chain.map(d=>{
+        return `${d.date} | ĐB=${d.db2} | G7=${d.g7.join(" ")} | G6=${d.g6.join(" ")}`;
+      }).join("\n");
+    }
+
+    function phaSafe(){
+      // HardLock: need at least 3 days clean
+      if(chain.length < 3){
+        return {status:"STOP", note:"Thiếu dữ liệu (cần ≥ 3 ngày sạch).", conf:0.25};
+      }
+
+      // Validate date order (no duplicates already handled)
+      // detect jumps backwards not possible after sort; but check gaps? (optional)
+      const tails = chain.map(x=>x.db2);
+      const last = chain[chain.length-1];
+      const prev = chain[chain.length-2];
+
+      // Simple signals (light, but safe):
+      // S1: repeat digit pressure (same unit digit repeated in last 2-3)
+      const u = tails.map(x=>x[1]);
+      const t = tails.map(x=>x[0]);
+      const lastU = u[u.length-1], lastT = t[t.length-1];
+
+      const repU = u.slice(-3).filter(v=>v===lastU).length; // 1..3
+      const repT = t.slice(-3).filter(v=>v===lastT).length;
+
+      // S2: G7 "lõi" relation: if last.db2 matches any G7 last day (exact or đảo)
+      const inG7 = last.g7.includes(last.db2);
+      const rev = last.db2[1]+last.db2[0];
+      const inG7rev = last.g7.includes(rev);
+
+      // S3: G6 "neo" relation: last.db2 digits appear as suffix of any G6 (xxx ends with db2's unit?) rough
+      const g6Ends = last.g6.map(x=>x.slice(-1));
+      const g6HitUnit = g6Ends.includes(lastU);
+
+      // Compose SAFE conclusion:
+      let score = 0;
+      if(repU>=2) score += 1;
+      if(repT>=2) score += 0.5;
+      if(inG7 || inG7rev) score += 1;
+      if(g6HitUnit) score += 0.5;
+
+      // HardLock STOP rules:
+      // - If score too low: STOP
+      // - If G7 noisy (has both db2 and rev simultaneously over last 2 days): STOP
+      const prevInG7 = prev.g7.includes(prev.db2) || prev.g7.includes(prev.db2[1]+prev.db2[0]);
+      const noiseStop = prevInG7 && (inG7 || inG7rev) && (last.db2 !== prev.db2) && (rev === prev.db2 || prev.db2[1]+prev.db2[0] === last.db2);
+
+      if(noiseStop){
+        return {status:"STOP", note:"Nghi nhiễu pha (G7 bám/đảo chéo 2 ngày) → không ép trục.", conf:0.35};
+      }
+      if(score < 1.5){
+        return {status:"STOP", note:"Tín hiệu chưa đủ mạnh (score thấp) → ưu tiên dừng hoặc chơi dàn giả thiết.", conf:0.35};
+      }
+
+      // Suggest direction (not gambling guarantee): propose 3 scenarios + anti
+      // Scenario A: bám unit digit (lõi)
+      const A = `A: bám đuôi ${lastU} (lõi đang nén)`;
+      // Scenario B: đảo (anti bẫy)
+      const B = `B: đảo ${rev} (anti-bẫy)`;
+      // Scenario C: lệch 1 nhịp (kề đuôi)
+      const k1 = (Number(lastU)+1)%10, k_1 = (Number(lastU)+9)%10;
+      const C = `C: kề đuôi ${k_1}/${k1} (trượt 1 nhịp)`;
+
+      // Pick ONE anti number: prefer reverse if not same
+      const anti = rev;
+
+      // Provide a "best single pair" only if very strong; else none
+      let best = null;
+      if(score >= 2.5){
+        // If unit pressure high, propose xU where x = lastT or its neighbor
+        best = `${lastT}${lastU}`;
+      }else{
+        best = anti;
+      }
+
+      const conf = Math.min(0.78, 0.45 + 0.12*score);
+
+      return {
+        status:"GO",
+        note: [A,B,C,`Anti bắt buộc: ${anti}`,`Chốt 1 cặp (SAFE): ${best}`].join("\n"),
+        conf
+      };
+    }
+
+    function renderPHA(){
+      const res = phaSafe();
+      if(res.status==="STOP"){
+        setDot(st.pha,"bad");
+        st.phaOut.textContent = `PHA: STOP\n${res.note}\nConfidence≈${Math.round(res.conf*100)}%`;
+      }else{
+        setDot(st.pha,"ok");
+        st.phaOut.textContent = `PHA: GO (đủ điều kiện tối thiểu)\n${res.note}\nConfidence≈${Math.round(res.conf*100)}%`;
+      }
+    }
+
+    // =========================
+    // RUN FULL
+    // =========================
+    $("btn_run").addEventListener("click", async ()=>{
+      if(!files.length && !lastImageBitmap){
+        alert("Chưa có ảnh. Upload hoặc bật camera.");
+        return;
+      }
+      setDot(st.ocr,""); setDot(st.gate,""); setDot(st.pha,"");
+      let ok=0, fail=0;
+
+      // Only process current first image (safe). You can extend to batch all files.
+      const f = files[0];
+      try{
+        setDot(st.ocr,"");
+        const bmp = lastImageBitmap || await createImageBitmap(f);
+        drawPreprocess(bmp);
+
+        // OCR pass1 on canvas
+        setDot(st.ocr,"");
+        let text = await ocrCanvasText(st.cv);
+        text = normalizeDigits(text);
+        st.raw.value = text;
+        setDot(st.ocr,"ok");
+
+        // Gate pass2: parse structured
+        setDot(st.gate,"");
+        const date = extractDate(text);
+        let db2 = extractDB2(text);
+        let g7 = extractG7(text);
+        let g6 = extractG6(text);
+
+        let obj = {date, db2, g7, g6, raw:text};
+        obj = applyManualFix(obj);
+
+        const errs = gateValidate(obj);
+        if(errs.length){
+          setDot(st.gate,"bad");
+          st.gateOut.value = `GATE: FAIL\nerrs=${errs.join(", ")}\n---\nTry: điền Manual Date / Manual Fix rồi CHẠY FULL lại.\n`;
+          fail++; st.k_fail.textContent = String(fail); st.k_ok.textContent = String(ok);
+          renderPHA();
+          return;
+        }
+
+        setDot(st.gate,"ok");
+        st.gateOut.value =
+          `GATE: PASS\nDATE=${obj.date}\nDB2=${obj.db2}\nG7=${obj.g7.join(" ")}\nG6=${obj.g6.join(" ")}\n`;
+
+        upsertDay(obj);
+        ok++; st.k_ok.textContent = String(ok);
+
+      }catch(e){
+        console.error(e);
+        fail++; st.k_fail.textContent = String(fail);
+        setDot(st.ocr,"bad");
+        setDot(st.gate,"bad");
+        st.gateOut.value = "Lỗi OCR/Gate. Hãy thử ảnh rõ hơn hoặc dùng Manual Fix.";
+      }
+    });
+
+    // =========================
+    // Sample data (for quick test)
+    // =========================
+    $("btn_sample").addEventListener("click", ()=>{
+      // Minimal mock chain (you can overwrite by your real OCR)
+      chain = [
+        {date:"2026-02-20", db2:"81", g7:["75","42","09","81"], g6:["586","074","150"], raw:""},
+        {date:"2026-02-21", db2:"13", g7:["91","14","96","09"], g6:["243","887","936"], raw:""},
+        {date:"2026-02-22", db2:"12", g7:["30","88","09","33"], g6:["003","214","087"], raw:""},
+        {date:"2026-02-23", db2:"55", g7:["45","43","00","57"], g6:["396","332","669"], raw:""},
+        {date:"2026-02-24", db2:"37", g7:["95","36","37","42"], g6:["344","904","115"], raw:""},
+        {date:"2026-02-25", db2:"53", g7:["84","30","13","67"], g6:["410","044","718"], raw:""},
+        {date:"2026-02-26", db2:"08", g7:["50","41","65","99"], g6:["609","108","352"], raw:""},
+        {date:"2026-02-27", db2:"83", g7:["57","42","39","13"], g6:["247","554","108"], raw:""}
+      ];
+      saveStore();
+      renderChain();
+      renderPHA();
+      st.k_files.textContent = "0";
+      st.btn_run.disabled = true;
+      setDot(st.pre,"ok"); setDot(st.ocr,""); setDot(st.gate,"ok");
+    });
+
+    // Initial render
+    renderPHA();
+  </script>
+</body>
+</html>
