@@ -3,1001 +3,1039 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>Bùi Hào — Lotto ULTRA MASTER (ULTRA v3 • 2-ZONE OCR • PHA SAFE HardLock • HIT@3>=2)</title>
-  <meta name="theme-color" content="#0b1220" />
+  <title>Bùi Hào — Lotto ULTRA MASTER (V4 • 2-ZONE OCR • QUARANTINE+VOTE • PHA SAFE • SOI&CHỐT)</title>
+  <meta name="theme-color" content="#0b1320" />
   <style>
     :root{
-      --bg:#0b1220;
-      --card:#0f1a2f;
-      --card2:#0c172a;
-      --line:rgba(255,255,255,.08);
-      --txt:rgba(255,255,255,.92);
-      --muted:rgba(255,255,255,.62);
-      --muted2:rgba(255,255,255,.42);
-      --ok:#2de38a;
-      --warn:#ffcc66;
-      --bad:#ff5a7a;
-      --btn:#1f6fff;
-      --btn2:#1a2d52;
-      --shadow:0 12px 34px rgba(0,0,0,.45);
+      --bg:#0b1320; --card:#111c2e; --card2:#0f1a2b;
+      --text:#e8f0ff; --muted:#9cb3d6;
+      --ok:#30d158; --warn:#ffd60a; --bad:#ff453a; --info:#64d2ff;
+      --btn:#1d3b6b; --btn2:#203f75; --chip:#162844;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
       --r:18px;
       --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       --sans: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
     }
     *{box-sizing:border-box}
     body{
-      margin:0;
-      font-family:var(--sans);
-      color:var(--txt);
-      background: radial-gradient(1200px 800px at 20% 0%, #172b54 0%, rgba(23,43,84,0) 50%),
-                  radial-gradient(900px 700px at 90% 10%, #123a3a 0%, rgba(18,58,58,0) 55%),
-                  var(--bg);
-      min-height:100vh;
+      margin:0; font-family:var(--sans); background:radial-gradient(1200px 600px at 70% -10%, #163a7a33, transparent 60%),
+      radial-gradient(900px 500px at 10% 0%, #1f7a5a22, transparent 55%),
+      var(--bg);
+      color:var(--text);
     }
-    .wrap{max-width:980px;margin:0 auto;padding:18px 14px 40px}
+    .wrap{max-width:980px;margin:0 auto;padding:18px 14px 80px}
     .hero{
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      border:1px solid var(--line);
-      border-radius:22px;
-      padding:16px 16px 14px;
-      box-shadow:var(--shadow);
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:24px; padding:18px 16px; box-shadow:var(--shadow);
+      position:sticky; top:0; z-index:4; backdrop-filter: blur(10px);
     }
-    .title{font-weight:900;letter-spacing:.2px;font-size:22px;line-height:1.15}
-    .sub{margin-top:8px;color:var(--muted);line-height:1.35}
-    .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+    h1{margin:0 0 6px;font-size:20px;letter-spacing:.2px}
+    .sub{color:var(--muted);font-size:13px;line-height:1.35}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
     .chip{
-      display:inline-flex;gap:8px;align-items:center;
-      border:1px solid var(--line);
-      background: rgba(0,0,0,.16);
-      padding:8px 10px;border-radius:999px;color:var(--muted);
-      font-size:12.5px;
-    }
-    .dot{width:10px;height:10px;border-radius:99px;background:var(--muted2);box-shadow:0 0 0 3px rgba(255,255,255,.03) inset}
-    .dot.ok{background:var(--ok)}
-    .dot.warn{background:var(--warn)}
-    .dot.bad{background:var(--bad)}
-    .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:12px;margin-top:12px}
-    @media (max-width: 900px){.grid{grid-template-columns:1fr}}
-    .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-      border:1px solid var(--line);
-      border-radius:var(--r);
-      padding:14px;
-      box-shadow:0 10px 28px rgba(0,0,0,.35);
-    }
-    .card h3{margin:0;font-size:14px;letter-spacing:.2px}
-    .hint{color:var(--muted);font-size:12.8px;line-height:1.35;margin-top:6px}
-    .hr{height:1px;background:var(--line);margin:12px 0}
-    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    .btn{
-      border:0;cursor:pointer;
-      border-radius:14px;
-      padding:11px 14px;
-      color:white;
-      background: linear-gradient(180deg, rgba(31,111,255,.95), rgba(31,111,255,.65));
-      box-shadow:0 10px 24px rgba(31,111,255,.25);
-      font-weight:800;
-      letter-spacing:.2px;
-      display:inline-flex;align-items:center;gap:10px;
-    }
-    .btn.secondary{
-      background: linear-gradient(180deg, rgba(26,45,82,.95), rgba(26,45,82,.65));
-      box-shadow:none;
-      border:1px solid var(--line);
-      color:rgba(255,255,255,.9);
-      font-weight:800;
-    }
-    .btn.danger{
-      background: linear-gradient(180deg, rgba(255,90,122,.92), rgba(255,90,122,.55));
-      box-shadow:0 10px 24px rgba(255,90,122,.18);
-    }
-    .btn:disabled{opacity:.5;cursor:not-allowed}
-    input, textarea{
-      width:100%;
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:12px 12px;
-      background: rgba(0,0,0,.18);
-      color:var(--txt);
-      outline:none;
-      font-size:14px;
-    }
-    textarea{min-height:76px;resize:vertical;font-family:var(--mono);font-size:12.8px;line-height:1.35}
-    .kpiGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    .kpi{
-      background: rgba(0,0,0,.18);
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:12px;
-    }
-    .kpi .big{font-size:26px;font-weight:900}
-    .kpi .lab{color:var(--muted);font-size:12px;margin-top:2px}
-    .monoBox{
-      font-family:var(--mono);
-      font-size:12.6px;
-      white-space:pre-wrap;
-      background: rgba(0,0,0,.20);
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:12px;
-      color:rgba(255,255,255,.86);
-      line-height:1.35;
-    }
-    .pill{
       display:inline-flex;align-items:center;gap:8px;
-      border:1px solid var(--line);
-      background: rgba(0,0,0,.16);
-      padding:8px 10px;border-radius:999px;color:var(--muted);
-      font-size:12px;margin-right:8px;margin-bottom:8px
+      padding:8px 10px;border-radius:999px;background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08); font-size:12px; color:var(--muted)
     }
-    .tabs{display:flex;gap:8px;flex-wrap:wrap}
-    .tab{
-      padding:9px 12px;border-radius:999px;
-      border:1px solid var(--line);
-      background: rgba(0,0,0,.16);
-      color:var(--muted);
-      font-size:12.5px;
-      cursor:pointer;
-      user-select:none;
-      font-weight:800;
+    .dot{width:10px;height:10px;border-radius:50%}
+    .dot.ok{background:var(--ok)} .dot.warn{background:var(--warn)} .dot.bad{background:var(--bad)} .dot.info{background:var(--info)}
+    .grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:14px}
+    @media(min-width:860px){ .grid{grid-template-columns:1.2fr .8fr} }
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:var(--r); padding:14px; box-shadow:var(--shadow)
     }
-    .tab.active{background: rgba(31,111,255,.18);color:rgba(255,255,255,.9);border-color:rgba(31,111,255,.35)}
+    .card h2{margin:0 0 10px;font-size:15px}
+    .hint{color:var(--muted);font-size:12px;line-height:1.35}
+    .controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+    button{
+      border:0; cursor:pointer; color:var(--text);
+      padding:11px 14px;border-radius:14px;background:linear-gradient(180deg,var(--btn2),var(--btn));
+      box-shadow:0 10px 20px rgba(0,0,0,.25);
+      font-weight:700; letter-spacing:.2px;
+    }
+    button.secondary{
+      background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1);
+      box-shadow:none; font-weight:650
+    }
+    button.danger{
+      background:linear-gradient(180deg,#7a1b1b,#551515);
+    }
+    button:disabled{opacity:.5;cursor:not-allowed}
+    input, textarea, select{
+      width:100%; padding:12px 12px; border-radius:14px;
+      border:1px solid rgba(255,255,255,.12); background:rgba(0,0,0,.25);
+      color:var(--text); outline:none
+    }
+    textarea{min-height:92px; font-family:var(--mono); font-size:12px; line-height:1.35}
+    .kpi{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}
+    .kpi .box{
+      background:rgba(0,0,0,.18); border:1px solid rgba(255,255,255,.08);
+      border-radius:16px; padding:12px
+    }
+    .kpi .big{font-size:28px;font-weight:800;letter-spacing:.3px}
+    .kpi .lab{color:var(--muted);font-size:12px;margin-top:4px}
+    .pill{display:inline-flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+    .pill span{
+      font-size:12px;color:var(--muted);
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+      padding:7px 10px;border-radius:999px
+    }
+    .seg{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .seg button{padding:9px 11px;border-radius:999px;font-weight:750}
+    .seg button.active{outline:2px solid rgba(100,210,255,.45)}
     .previewWrap{
-      border:1px dashed rgba(255,255,255,.20);
-      border-radius:16px;
-      padding:10px;
-      background: rgba(0,0,0,.12);
-      overflow:hidden;
+      margin-top:12px; border-radius:18px; overflow:hidden;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.22)
     }
-    canvas{max-width:100%;height:auto;border-radius:12px;background:#fff}
+    canvas{display:block;width:100%;height:auto}
+    .mono{font-family:var(--mono)}
+    .log{
+      white-space:pre-wrap; font-family:var(--mono);
+      font-size:12px; line-height:1.4; color:#d7e6ff
+    }
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;border-radius:12px;border:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.20); font-size:12px; color:var(--muted)
+    }
+    .badge strong{color:var(--text)}
+    .statusLine{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px}
+    .divider{height:1px;background:rgba(255,255,255,.08);margin:12px 0}
+    .toast{
+      position:fixed; left:50%; bottom:16px; transform:translateX(-50%);
+      background:rgba(0,0,0,.78); border:1px solid rgba(255,255,255,.16);
+      color:var(--text); padding:10px 12px;border-radius:12px; z-index:99;
+      font-size:13px; max-width:min(720px,92vw);
+      box-shadow:var(--shadow); display:none
+    }
     .small{font-size:12px;color:var(--muted)}
-    .footer{margin-top:14px;color:var(--muted2);font-size:12px;line-height:1.35}
+    .okTxt{color:var(--ok)} .badTxt{color:var(--bad)} .warnTxt{color:var(--warn)} .infoTxt{color:var(--info)}
   </style>
+
+  <!-- Tesseract.js (CDN). Nếu muốn OFFLINE: tải file về và đổi src -->
+  <script src="https://unpkg.com/tesseract.js@5.1.0/dist/tesseract.min.js"></script>
 </head>
 <body>
-<div class="wrap">
-  <div class="hero">
-    <div class="title">Bùi Hào — Lotto ULTRA MASTER (ULTRA v3 • 2-ZONE OCR • PHA SAFE HardLock • HIT@3>=2)</div>
-    <div class="sub">
-      Luồng cao nhất: <b>StartDate Hard-Assign</b> → <b>Preprocess</b> (trim/contrast/scale) → <b>OCR 2-ZONE</b> (DB riêng / BOTTOM riêng)
-      → <b>Gate DB/G7/G6</b> → <b>HardLock chuỗi ngày</b> → mở <b>PHA SAFE</b> → <b>SOI & CHỐT HƯỚNG</b>.
-      Thiếu/không chắc → <b>STOP</b>.
+  <div class="wrap">
+    <div class="hero">
+      <h1>Bùi Hào — Lotto ULTRA MASTER (V4 • 2-ZONE OCR • QUARANTINE+VOTE • PHA SAFE • SOI&CHỐT)</h1>
+      <div class="sub">
+        Luồng cao nhất: <b>StartDate</b> → <b>Preprocess</b> (trim/contrast/scale) → <b>OCR 2-ZONE</b> (DB riêng / BOTTOM riêng) → <b>Rescue multi-pass</b> → <b>Vote</b> → <b>Gate DB/G7/G6</b> → <b>Quarantine FAIL</b> → <b>Commit timeline theo ngày</b> → <b>PHA SAFE</b> → <b>SOI & CHỐT HƯỚNG</b>. Thiếu/không chắc → <b>STOP</b>.
+      </div>
+      <div class="row">
+        <span class="chip"><span class="dot ok"></span>2-ZONE OCR</span>
+        <span class="chip"><span class="dot ok"></span>Rescue Presets</span>
+        <span class="chip"><span class="dot info"></span>Vote + Score</span>
+        <span class="chip"><span class="dot warn"></span>Quarantine FAIL</span>
+        <span class="chip"><span class="dot ok"></span>Commit DayPointer</span>
+        <span class="chip"><span class="dot ok"></span>PHA SAFE HardLock</span>
+      </div>
     </div>
-    <div class="chips">
-      <div class="chip"><span class="dot ok" id="st_pre"></span> Preprocess</div>
-      <div class="chip"><span class="dot" id="st_ocr"></span> OCR (2-zone)</div>
-      <div class="chip"><span class="dot" id="st_gate"></span> Gate</div>
-      <div class="chip"><span class="dot" id="st_pha"></span> PHA SAFE</div>
-      <div class="chip"><span class="dot ok" id="st_hard"></span> HardLock=ON</div>
-      <div class="chip"><span class="dot ok"></span> V3=2-ZONE + Rescue</div>
+
+    <div class="grid">
+      <!-- LEFT -->
+      <div class="card">
+        <h2>1) Nhập ảnh</h2>
+        <div class="hint">
+          Mẹo ảnh: crop sát phần bảng (từ “ĐB/DB” tới “7”). Tránh dính footer tab (Miền Bắc/Trung/Nam) & header quảng cáo.
+          Nếu ảnh “dính” nhiều thứ → bật Rescue Presets / dùng Manual Fix.
+        </div>
+
+        <div class="controls">
+          <input id="files" type="file" accept="image/*" multiple />
+          <button class="secondary" id="btnSample">Dán mẫu</button>
+          <button class="danger" id="btnReset">RESET SẠCH</button>
+          <button id="btnRun">⚡ CHẠY FULL</button>
+        </div>
+
+        <div class="kpi">
+          <div class="box"><div class="big" id="kOK">0</div><div class="lab">Batch OK (commit)</div></div>
+          <div class="box"><div class="big" id="kFail">0</div><div class="lab">Batch FAIL (quarantine)</div></div>
+          <div class="box"><div class="big" id="kDays">0</div><div class="lab">Save (ngày sạch)</div></div>
+          <div class="box"><div class="big" id="kConf">0%</div><div class="lab">PHA Confidence (từ chuỗi sạch)</div></div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="controls" style="gap:12px">
+          <div style="flex:1;min-width:240px">
+            <div class="small">StartDate (bắt buộc — YYYY-MM-DD)</div>
+            <input id="startDate" placeholder="2026-02-28" />
+            <div class="small" style="margin-top:6px">
+              <b>ULTRA rule:</b> chỉ <b>commit</b> ngày khi Gate OK. Ảnh FAIL → <b>Quarantine</b> (không tăng dayPointer).
+            </div>
+          </div>
+          <div style="flex:1;min-width:240px">
+            <div class="small">Manual Fix (DB|G7|G6) — dán khi OCR lệch</div>
+            <input id="manualFix" placeholder='VD: DB=83 | G7=57 42 39 13 | G6=247 554 108' />
+            <div class="small" style="margin-top:6px">
+              Chỉ dùng khi Gate fail / OCR rác. <b>Không “đoán dữ liệu”</b>.
+            </div>
+          </div>
+        </div>
+
+        <div class="controls" style="margin-top:10px">
+          <button class="secondary" id="btnRescue">🛟 Rescue presets (tự chạy 6 pass)</button>
+          <button class="secondary" id="btnExport">⬇ Export JSON</button>
+          <button class="secondary" id="btnImport">⬆ Import JSON</button>
+          <input id="importFile" type="file" accept="application/json" style="display:none" />
+        </div>
+
+        <div class="divider"></div>
+
+        <h2>2) Preview (auto-trim + 2-ZONE)</h2>
+        <div class="seg">
+          <button class="secondary active" data-tab="all" id="tabAll">Preview tổng</button>
+          <button class="secondary" data-tab="db" id="tabDB">DB-zone</button>
+          <button class="secondary" data-tab="bt" id="tabBT">BOTTOM-zone</button>
+        </div>
+        <div class="previewWrap">
+          <canvas id="cv"></canvas>
+        </div>
+
+        <div class="pill">
+          <span>DB-zone: từ “ĐB/DB” đến hết G2</span>
+          <span>BOTTOM-zone: từ G4/G5 xuống G6/G7</span>
+          <span>Vote: score pattern + conf</span>
+          <span>Commit: Gate OK mới lưu ngày</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <h2>3) OCR Raw (vote winner)</h2>
+        <textarea id="ocrDB" placeholder="OCR Raw — DB zone"></textarea>
+        <textarea id="ocrBT" placeholder="OCR Raw — BOTTOM zone" style="margin-top:10px"></textarea>
+
+        <div class="divider"></div>
+
+        <h2>4) Gate Output (commit/quarantine)</h2>
+        <div class="log" id="gateOut">—</div>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="card">
+        <h2>PHA SAFE • SOI & CHỐT HƯỚNG (6 dòng)</h2>
+        <div class="hint">
+          Nguyên tắc: <b>OCR sạch → Gate đúng → chuỗi sạch ≥ 3 ngày → mới mở PHA</b>.  
+          Nếu nhiễu / thiếu lõi / bung biên mạnh → <b>STOP</b> (ưu tiên anti).  
+          Format chốt đúng yêu cầu Hào: <b>6 dòng</b>, chốt trước giải thích sau.
+        </div>
+
+        <div class="statusLine">
+          <span class="badge"><strong>HardLock</strong> <span id="hardLockTxt" class="okTxt">ON</span></span>
+          <span class="badge"><strong>Quarantine</strong> <span id="qTxt" class="warnTxt">Active</span></span>
+          <span class="badge"><strong>Core</strong> <span id="coreTxt" class="infoTxt">đuôi ĐB + lõi G7</span></span>
+        </div>
+
+        <div class="divider"></div>
+
+        <h2>Chuỗi đã lưu (theo ngày) — chỉ ngày “commit sạch”</h2>
+        <div class="log" id="savedList">—</div>
+
+        <div class="divider"></div>
+
+        <h2>Quarantine (FAIL) — không đụng timeline</h2>
+        <div class="log" id="quarantineList">—</div>
+
+        <div class="divider"></div>
+
+        <h2>SOI & CHỐT HƯỚNG (6 dòng)</h2>
+        <div class="log" id="chot6">Chưa đủ dữ liệu sạch (cần ≥ 3 ngày commit).</div>
+
+        <div class="controls" style="margin-top:12px">
+          <button id="btnAnalyze">📌 PHÂN TÍCH & CHỐT</button>
+        </div>
+
+        <div class="divider"></div>
+
+        <h2>Checklist chống lệch ngày / lệch pha</h2>
+        <div class="hint">
+          • Ngày tăng đúng thứ tự: <b>StartDate + số lần commit</b> (FAIL không tăng).<br/>
+          • Mỗi ngày: phải có <b>DB(2)</b> + <b>G7(4)</b> + <b>G6(3)</b>.<br/>
+          • G7/G6 OCR lẫn G4/G5 → score thấp → <b>Vote loại</b> / đưa vào Quarantine.<br/>
+          • Anti-bẫy: khi “bung biên / thiếu lõi / nhiễu cao” → <b>STOP</b>.
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="grid">
-    <div class="card">
-      <h3>1) Nhập ảnh</h3>
-      <div class="hint">Mẹo ảnh: crop sát phần bảng (từ “ĐB/DB” tới “7”). Tránh dính footer tab & header quảng cáo. Nếu ảnh “dính” → bật Rescue presets.</div>
-      <div class="hr"></div>
-      <div class="row">
-        <input id="file" type="file" accept="image/*" multiple />
-        <button class="btn secondary" id="btnPaste">📋 Dán mẫu</button>
-        <button class="btn danger" id="btnReset">🧽 RESET SẠCH</button>
-        <button class="btn" id="btnFull">⚡ CHẠY FULL</button>
-      </div>
-
-      <div class="hr"></div>
-
-      <div class="kpiGrid">
-        <div class="kpi">
-          <div class="big" id="k_ok">0</div>
-          <div class="lab">Batch OK</div>
-        </div>
-        <div class="kpi">
-          <div class="big" id="k_fail">0</div>
-          <div class="lab">Batch FAIL</div>
-        </div>
-        <div class="kpi">
-          <div class="big" id="k_days">0</div>
-          <div class="lab">Save (ngày)</div>
-        </div>
-        <div class="kpi">
-          <div class="big" id="k_conf">--</div>
-          <div class="lab">PHA Confidence</div>
-        </div>
-      </div>
-
-      <div class="hr"></div>
-
-      <div class="row" style="gap:12px;align-items:flex-start">
-        <div style="flex:1;min-width:260px">
-          <div class="small"><b>StartDate</b> (bắt buộc — YYYY-MM-DD)</div>
-          <input id="startDate" placeholder="2026-02-28" />
-          <div class="footer">Cứng nhất: <b>ngày = StartDate + index ảnh</b>. OCR header chỉ để xác nhận (không quyết định).</div>
-        </div>
-        <div style="flex:1;min-width:260px">
-          <div class="small"><b>Manual Fix (DB|G7|G6)</b> — dán khi OCR lệch</div>
-          <input id="manualFix" placeholder="VD: DB=83 | G7=57 42 39 13 | G6=247 554 108" />
-          <div class="footer">Chỉ dùng khi Gate fail. Không “đoán dữ liệu”.</div>
-        </div>
-      </div>
-
-      <div class="hr"></div>
-
-      <div class="row">
-        <button class="btn secondary" id="btnRescue">🛟 Rescue presets (tự chạy 4 mức trim)</button>
-        <span class="pill">Gate-1: DB2 + G7(4) + G6(3)</span>
-        <span class="pill">Gate-2: DB5 → DB2 khớp</span>
-        <span class="pill">Gate-3: lệch ngày = STOP</span>
-      </div>
-
-      <div class="hr"></div>
-
-      <div class="tabs">
-        <div class="tab active" data-tab="all">Preview tổng (auto-trim)</div>
-        <div class="tab" data-tab="db">DB-zone</div>
-        <div class="tab" data-tab="bot">BOTTOM-zone</div>
-      </div>
-      <div class="previewWrap" style="margin-top:10px">
-        <canvas id="cvAll" width="900" height="1200"></canvas>
-        <div style="display:none">
-          <canvas id="cvDB" width="900" height="1200"></canvas>
-          <canvas id="cvBot" width="900" height="1200"></canvas>
-        </div>
-      </div>
-      <div class="footer">ULTRA v3: cắt 2 vùng riêng để giảm nhiễu OCR: (1) vùng ĐB/DB (2) vùng cuối chứa G6/G7.</div>
-    </div>
-
-    <div class="card">
-      <h3>2) OCR → Gate → PHA SAFE → Chốt</h3>
-      <div class="hint">Nguyên tắc: <b>OCR sạch</b> → <b>Gate đúng</b> → mới mở PHA. Thiếu/không chắc → STOP.</div>
-
-      <div class="hr"></div>
-
-      <div class="small"><b>OCR Raw — DB zone</b></div>
-      <div class="monoBox" id="rawDB">(trống)</div>
-
-      <div class="hr"></div>
-
-      <div class="small"><b>OCR Raw — BOTTOM zone</b></div>
-      <div class="monoBox" id="rawBot">(trống)</div>
-
-      <div class="hr"></div>
-
-      <div class="small"><b>Gate Output</b></div>
-      <div class="monoBox" id="gateOut">GATE: waiting</div>
-
-      <div class="hr"></div>
-
-      <div class="small"><b>PHA SAFE • HardLock</b> (chỉ mở pha khi ≥ 3 ngày sạch)</div>
-      <div class="monoBox" id="phaOut">PHA: STOP (chưa đủ dữ liệu sạch)</div>
-
-      <div class="hr"></div>
-
-      <div class="small"><b>SOI & CHỐT HƯỚNG (6 dòng)</b> — chốt trước, giải thích sau</div>
-      <div class="monoBox" id="chotOut">(chưa chốt)</div>
-      <div class="row" style="margin-top:10px">
-        <button class="btn secondary" id="btnAnalyze">📌 PHÂN TÍCH & CHỐT</button>
-        <button class="btn secondary" id="btnExport">⬇️ Export JSON</button>
-        <button class="btn secondary" id="btnImport">⬆️ Import JSON</button>
-      </div>
-
-      <div class="footer">
-        Checklist chống lệch:
-        <ul style="margin:8px 0 0 18px;padding:0;color:var(--muted)">
-          <li>Ngày phải tăng đúng thứ tự (Hard-Assign theo StartDate + index).</li>
-          <li>Mỗi ngày phải có DB2 + G7(4) + G6(3).</li>
-          <li>Gate fail → Manual Fix / đổi ảnh / bật Rescue.</li>
-          <li>Không đủ sạch → STOP, không soi pha.</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Tesseract -->
-<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
-<!-- OpenCV -->
-<script async src="https://docs.opencv.org/4.x/opencv.js"></script>
+  <div class="toast" id="toast"></div>
 
 <script>
-/* ===========================
-   ULTRA v3 — Core
-=========================== */
+/* =========================
+   ULTRA V4 — CORE
+   - 2-ZONE OCR (DB zone / BOTTOM zone)
+   - Rescue multi-pass + vote
+   - Gate strict: DB2 + G7(4x2digits) + G6(3x3digits)
+   - Quarantine FAIL (no dayPointer++)
+   - Commit OK -> save by computed day
+   - PHA SAFE + SOI & CHỐT 6 dòng (TH + anti)
+   ========================= */
+
 const $ = (id)=>document.getElementById(id);
-const LS_KEY = "BH_ULTRA_V3_CHAIN";
-const LS_META = "BH_ULTRA_V3_META";
-
 const state = {
-  images: [],
+  tab:'all',
+  images:[], // {file, img, name}
+  currentIndex:0,
+  running:false,
   ok:0, fail:0,
-  lastPreview: null,
-  lastZones: {db:null, bot:null},
-  lastOCR: {db:"", bot:""},
-  lastGate: null,
-  chain: []
+  storeKey:'BH_ULTRA_V4_STORE',
+  qKey:'BH_ULTRA_V4_QUAR',
+  hardLock:true,
+  // trim presets for auto-trim (top, bottom) as percentage of height
+  presets:[
+    {name:'P0', top:.12, bot:.12, scale:1.6, contrast:1.05, sharp:0.0},
+    {name:'P1', top:.10, bot:.14, scale:1.8, contrast:1.10, sharp:0.0},
+    {name:'P2', top:.14, bot:.10, scale:1.8, contrast:1.12, sharp:0.0},
+    {name:'P3', top:.16, bot:.14, scale:2.0, contrast:1.15, sharp:0.0},
+    {name:'P4', top:.08, bot:.16, scale:2.0, contrast:1.12, sharp:0.0},
+    {name:'P5', top:.18, bot:.10, scale:2.2, contrast:1.18, sharp:0.0},
+  ]
 };
 
-const UI = {
-  pre: $("st_pre"),
-  ocr: $("st_ocr"),
-  gate: $("st_gate"),
-  pha: $("st_pha"),
-  k_ok: $("k_ok"),
-  k_fail: $("k_fail"),
-  k_days: $("k_days"),
-  k_conf: $("k_conf"),
-  rawDB: $("rawDB"),
-  rawBot: $("rawBot"),
-  gateOut: $("gateOut"),
-  phaOut: $("phaOut"),
-  chotOut: $("chotOut"),
-};
-
-function setDot(dot, kind){
-  dot.classList.remove("ok","warn","bad");
-  if(kind) dot.classList.add(kind);
+// ===== Storage helpers
+function loadStore(){
+  try{ return JSON.parse(localStorage.getItem(state.storeKey) || '[]'); }catch(e){ return []; }
 }
-function setStatus(step, kind){
-  if(step==="ocr") setDot(UI.ocr, kind);
-  if(step==="gate") setDot(UI.gate, kind);
-  if(step==="pha") setDot(UI.pha, kind);
+function saveStore(arr){ localStorage.setItem(state.storeKey, JSON.stringify(arr)); }
+function loadQuar(){
+  try{ return JSON.parse(localStorage.getItem(state.qKey) || '[]'); }catch(e){ return []; }
+}
+function saveQuar(arr){ localStorage.setItem(state.qKey, JSON.stringify(arr)); }
+
+function toast(msg){
+  const t=$('toast');
+  t.textContent=msg;
+  t.style.display='block';
+  clearTimeout(t._to);
+  t._to=setTimeout(()=>t.style.display='none', 2400);
 }
 
-function toast(text){
-  UI.gateOut.textContent = text;
+// ===== Date helpers
+function parseDateISO(s){
+  if(!/^\d{4}-\d{2}-\d{2}$/.test((s||'').trim())) return null;
+  const [Y,M,D]=s.split('-').map(Number);
+  const dt=new Date(Date.UTC(Y, M-1, D));
+  if(dt.getUTCFullYear()!==Y || dt.getUTCMonth()!==M-1 || dt.getUTCDate()!==D) return null;
+  return dt;
+}
+function fmtDate(dt){
+  const y=dt.getUTCFullYear();
+  const m=String(dt.getUTCMonth()+1).padStart(2,'0');
+  const d=String(dt.getUTCDate()).padStart(2,'0');
+  return `${y}-${m}-${d}`;
+}
+function addDays(dt, n){
+  const t=new Date(dt.getTime());
+  t.setUTCDate(t.getUTCDate()+n);
+  return t;
 }
 
-/* ===========================
-   Storage
-=========================== */
-function loadChain(){
-  try{
-    const raw = localStorage.getItem(LS_KEY);
-    state.chain = raw ? JSON.parse(raw) : [];
-  }catch(e){ state.chain=[]; }
-  UI.k_days.textContent = String(state.chain.length);
+// ===== Image & canvas helpers
+const cv=$('cv'), ctx=cv.getContext('2d');
+
+function setTab(tab){
+  state.tab=tab;
+  $('tabAll').classList.toggle('active', tab==='all');
+  $('tabDB').classList.toggle('active', tab==='db');
+  $('tabBT').classList.toggle('active', tab==='bt');
+  renderPreview();
 }
-function saveChain(){
-  localStorage.setItem(LS_KEY, JSON.stringify(state.chain));
-  UI.k_days.textContent = String(state.chain.length);
+['tabAll','tabDB','tabBT'].forEach(id=>{
+  $(id).addEventListener('click', ()=> setTab($(id).dataset.tab));
+});
+
+function fitCanvas(w,h){
+  cv.width=w; cv.height=h;
 }
-function resetAll(){
-  state.images=[]; state.ok=0; state.fail=0;
-  state.lastPreview=null; state.lastZones={db:null,bot:null};
-  state.lastOCR={db:"",bot:""}; state.lastGate=null;
-  state.chain=[];
-  saveChain();
-  UI.k_ok.textContent="0"; UI.k_fail.textContent="0"; UI.k_conf.textContent="--";
-  UI.rawDB.textContent="(trống)"; UI.rawBot.textContent="(trống)";
-  UI.gateOut.textContent="GATE: waiting";
-  UI.phaOut.textContent="PHA: STOP (chưa đủ dữ liệu sạch)";
-  UI.chotOut.textContent="(chưa chốt)";
-  setStatus("ocr", null); setStatus("gate", null); setStatus("pha", null);
+function drawImageContain(img){
+  const maxW=cv.clientWidth || 800;
+  const scale=maxW/img.width;
+  const w=Math.max(1, Math.floor(img.width*scale));
+  const h=Math.max(1, Math.floor(img.height*scale));
+  fitCanvas(w,h);
+  ctx.clearRect(0,0,w,h);
+  ctx.drawImage(img,0,0,w,h);
 }
 
-/* ===========================
-   Date utils
-=========================== */
-function parseDateYYYYMMDD(s){
-  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec((s||"").trim());
-  if(!m) return null;
-  const d = new Date(Date.UTC(+m[1], +m[2]-1, +m[3]));
-  if(isNaN(d.getTime())) return null;
-  return d;
-}
-function fmtDate(d){
-  const y=d.getUTCFullYear();
-  const m=String(d.getUTCMonth()+1).padStart(2,"0");
-  const day=String(d.getUTCDate()).padStart(2,"0");
-  return `${y}-${m}-${day}`;
-}
-function addDaysUTC(d, n){
-  const x = new Date(d.getTime());
-  x.setUTCDate(x.getUTCDate()+n);
-  return x;
+function getZones(img, preset){
+  // work in full-res offscreen (better OCR)
+  const W = img.width, H = img.height;
+  const topCut = Math.floor(H * (preset?.top ?? 0.12));
+  const botCut = Math.floor(H * (preset?.bot ?? 0.12));
+  const y0 = topCut;
+  const y1 = H - botCut;
+  const Htrim = Math.max(10, y1 - y0);
+
+  // DB-zone: roughly from "ĐB/DB" down to end G2
+  // Heuristic: upper 45% of trimmed area
+  const dbY = y0;
+  const dbH = Math.floor(Htrim * 0.48);
+
+  // Bottom-zone: roughly from G4/G5 down to G7 (lower 55% of trimmed area)
+  const btY = y0 + Math.floor(Htrim * 0.45);
+  const btH = (y0 + Htrim) - btY;
+
+  // create offscreen canvas for each
+  const make = (sx,sy,sw,sh)=>{
+    const oc=document.createElement('canvas');
+    oc.width=Math.floor(sw*(preset.scale||1.8));
+    oc.height=Math.floor(sh*(preset.scale||1.8));
+    const octx=oc.getContext('2d');
+    // basic preprocess: scale + contrast
+    octx.drawImage(img, sx, sy, sw, sh, 0,0, oc.width, oc.height);
+    // contrast tweak
+    const imageData=octx.getImageData(0,0,oc.width,oc.height);
+    const data=imageData.data;
+    const c = preset.contrast ?? 1.12;
+    for(let i=0;i<data.length;i+=4){
+      // simple contrast around mid
+      for(let k=0;k<3;k++){
+        let v = data[i+k];
+        v = (v-128)*c + 128;
+        data[i+k] = Math.max(0, Math.min(255, v));
+      }
+    }
+    octx.putImageData(imageData,0,0);
+    return oc;
+  };
+
+  const trimmed = {sx:0, sy:y0, sw:W, sh:Htrim};
+  const db = {sx:0, sy:dbY, sw:W, sh:dbH};
+  const bt = {sx:0, sy:btY, sw:W, sh:btH};
+
+  return {trimmed, db, bt, make};
 }
 
-/* ===========================
-   Canvas preprocess (no OpenCV dependency)
-   - auto trim (rough)
-   - contrast + scale
-=========================== */
-function drawImageToCanvas(img, canvas, scale=1){
-  const ctx = canvas.getContext("2d");
-  const w = Math.floor(img.naturalWidth*scale);
-  const h = Math.floor(img.naturalHeight*scale);
-  canvas.width = w; canvas.height = h;
-  ctx.drawImage(img, 0, 0, w, h);
-}
-function enhanceContrast(canvas){
-  const ctx = canvas.getContext("2d");
-  const {width:w,height:h} = canvas;
-  const img = ctx.getImageData(0,0,w,h);
-  const d = img.data;
-  // grayscale + mild contrast
-  const contrast = 1.25;
-  const bias = -18;
-  for(let i=0;i<d.length;i+=4){
-    const r=d[i], g=d[i+1], b=d[i+2];
-    let y = (0.299*r + 0.587*g + 0.114*b);
-    y = (y-128)*contrast + 128 + bias;
-    y = Math.max(0, Math.min(255, y));
-    d[i]=d[i+1]=d[i+2]=y;
-    d[i+3]=255;
+function renderPreview(){
+  const item=state.images[state.currentIndex];
+  if(!item){ ctx.clearRect(0,0,cv.width,cv.height); return; }
+  const img=item.img;
+
+  // show simple preview in canvas with overlays (scaled)
+  const maxW=cv.clientWidth || 800;
+  const scale=maxW/img.width;
+  const w=Math.max(1, Math.floor(img.width*scale));
+  const h=Math.max(1, Math.floor(img.height*scale));
+  fitCanvas(w,h);
+  ctx.clearRect(0,0,w,h);
+  ctx.drawImage(img,0,0,w,h);
+
+  // overlay zones using default preset P0
+  const preset=state.presets[0];
+  const zones=getZones(img, preset);
+  const toScreen=(r)=>({
+    x: Math.floor(r.sx*scale),
+    y: Math.floor(r.sy*scale),
+    w: Math.floor(r.sw*scale),
+    h: Math.floor(r.sh*scale),
+  });
+
+  ctx.save();
+  ctx.lineWidth=2;
+  if(state.tab==='all'){
+    const db=toScreen(zones.db);
+    const bt=toScreen(zones.bt);
+    ctx.strokeStyle='rgba(100,210,255,.85)';
+    ctx.strokeRect(db.x, db.y, db.w, db.h);
+    ctx.fillStyle='rgba(100,210,255,.12)';
+    ctx.fillRect(db.x, db.y, db.w, db.h);
+    ctx.fillStyle='rgba(100,210,255,.9)';
+    ctx.font='12px system-ui';
+    ctx.fillText('DB-zone', db.x+8, db.y+18);
+
+    ctx.strokeStyle='rgba(255,214,10,.85)';
+    ctx.strokeRect(bt.x, bt.y, bt.w, bt.h);
+    ctx.fillStyle='rgba(255,214,10,.10)';
+    ctx.fillRect(bt.x, bt.y, bt.w, bt.h);
+    ctx.fillStyle='rgba(255,214,10,.95)';
+    ctx.fillText('BOTTOM-zone (G6/G7)', bt.x+8, bt.y+18);
+  }else if(state.tab==='db'){
+    const r=toScreen(zones.db);
+    ctx.strokeStyle='rgba(100,210,255,.95)';
+    ctx.strokeRect(r.x, r.y, r.w, r.h);
+    ctx.fillStyle='rgba(100,210,255,.12)';
+    ctx.fillRect(r.x, r.y, r.w, r.h);
+  }else{
+    const r=toScreen(zones.bt);
+    ctx.strokeStyle='rgba(255,214,10,.95)';
+    ctx.strokeRect(r.x, r.y, r.w, r.h);
+    ctx.fillStyle='rgba(255,214,10,.10)';
+    ctx.fillRect(r.x, r.y, r.w, r.h);
   }
-  ctx.putImageData(img,0,0);
-}
-function cropCanvas(src, rect){
-  const out = document.createElement("canvas");
-  out.width = Math.max(1, Math.floor(rect.w));
-  out.height = Math.max(1, Math.floor(rect.h));
-  const octx = out.getContext("2d");
-  octx.drawImage(src, rect.x, rect.y, rect.w, rect.h, 0, 0, out.width, out.height);
-  return out;
+  ctx.restore();
 }
 
-/* ULTRA v3: Auto-trim rough heuristic
-   - user already crops near table; we just trim top/bottom by ratios to remove header/footer.
-*/
-function autoTrimRect(canvas, topRatio=0.12, botRatio=0.14, leftRatio=0.03, rightRatio=0.03){
-  const w=canvas.width, h=canvas.height;
-  const x = Math.floor(w*leftRatio);
-  const y = Math.floor(h*topRatio);
-  const ww = Math.floor(w*(1-leftRatio-rightRatio));
-  const hh = Math.floor(h*(1-topRatio-botRatio));
-  return {x,y,w:ww,h:hh};
-}
-
-/* 2-ZONE split:
-   - DB zone: upper section where ĐB + DB number lives
-   - BOTTOM zone: lower section containing G6/G7 lines
-   These ratios are tuned for common app screenshots.
-*/
-function zoneRects(trimmed){
-  const w = trimmed.width, h=trimmed.height;
-  const db = {x:0, y:Math.floor(h*0.06), w:w, h:Math.floor(h*0.30)};     // includes DB + G1 rows
-  const bot = {x:0, y:Math.floor(h*0.62), w:w, h:Math.floor(h*0.38)};   // includes G6/G7 area + bottom
-  return {db, bot};
-}
-
-/* Rescue presets: try multiple trims */
-const RESCUE_PRESETS = [
-  {top:0.10, bot:0.12},
-  {top:0.12, bot:0.14},
-  {top:0.14, bot:0.16},
-  {top:0.16, bot:0.18},
-];
-
-/* ===========================
-   OCR (Tesseract)
-=========================== */
-async function ocrCanvas(canvas){
-  // Use eng+vie (vie might not exist in CDN build; fallback to eng)
-  try{
-    const { data } = await Tesseract.recognize(canvas, "eng", {
-      tessedit_char_whitelist: "0123456789DBĐBVGVEVLVMVDVH:|=-. \n",
-    });
-    return data.text || "";
-  }catch(e){
-    const { data } = await Tesseract.recognize(canvas, "eng", {});
-    return data.text || "";
-  }
-}
-
-/* ===========================
-   Gate parsing
-   Goal: extract DB2, G7(4), G6(3)
-   - DB2 from 5-digit special prize (last 2 digits) OR direct "DB=xx"
-   - G7: four 2-digit numbers (line contains 4 groups of 2)
-   - G6: three 3-digit numbers (line contains 3 groups of 3)
-=========================== */
-function cleanText(t){
-  return (t||"")
-    .replace(/[^\dDBĐBVGVEVLVMVDVH|=:\n ]/g," ")
-    .replace(/\s+/g," ")
-    .replace(/ \n/g,"\n")
+// ===== OCR / Gate / Vote
+function normalizeText(t){
+  return (t||'')
+    .replace(/[“”"]/g,'"')
+    .replace(/[|]/g,' ')
+    .replace(/\s+/g,' ')
     .trim();
 }
-function findAllNums(text, len){
-  const re = new RegExp(`\\b\\d{${len}}\\b`,"g");
-  return (text.match(re) || []);
+
+function extractNumbers(t){
+  // keep digits and spaces
+  const s = (t||'').replace(/[^\d\s]/g,' ').replace(/\s+/g,' ').trim();
+  if(!s) return [];
+  return s.split(' ').filter(Boolean);
 }
-function parseManualFix(s){
-  const t=(s||"").trim();
-  if(!t) return null;
-  const dbm = /DB\s*=\s*(\d{2})/i.exec(t);
-  const g7m = /G7\s*=\s*([0-9 ]+)/i.exec(t);
-  const g6m = /G6\s*=\s*([0-9 ]+)/i.exec(t);
-  const out = {};
-  if(dbm) out.db2 = dbm[1];
-  if(g7m){
-    const arr = (g7m[1].match(/\b\d{2}\b/g)||[]).slice(0,4);
-    if(arr.length===4) out.g7 = arr;
+
+function gateParse(dbText, btText){
+  const dbNums = extractNumbers(dbText);
+  const btNums = extractNumbers(btText);
+
+  // DB: find a 5-digit number somewhere, take last 2 digits
+  let db2=null, db5=null;
+  for(const n of dbNums){
+    if(n.length===5){
+      db5=n;
+      db2=n.slice(-2);
+      break;
+    }
   }
-  if(g6m){
-    const arr = (g6m[1].match(/\b\d{3}\b/g)||[]).slice(0,3);
-    if(arr.length===3) out.g6 = arr;
-  }
-  return (out.db2 && out.g7 && out.g6) ? out : null;
-}
-function gateFromOCR(rawDB, rawBot, manualFixStr){
-  const manual = parseManualFix(manualFixStr);
-  if(manual){
-    return {ok:true, via:"MANUAL", ...manual, errs:[]};
-  }
-
-  const dbT = cleanText(rawDB);
-  const botT = cleanText(rawBot);
-
-  // DB5 from db zone: look for 5-digit number likely DB prize
-  const nums5 = findAllNums(dbT, 5);
-  // heuristic: DB prize is often the biggest in DB zone; OCR tends to capture it
-  // take first 5-digit if exists
-  let db5 = nums5.length ? nums5[0] : null;
-  let db2 = db5 ? db5.slice(-2) : null;
-
-  // From bottom zone, get candidates
-  const nums2 = findAllNums(botT, 2);
-  const nums3 = findAllNums(botT, 3);
-
-  // find a line with 4 two-digit numbers for G7
-  // if OCR collapsed spaces, fallback: take last 4 of nums2
+  // G7: need 4 two-digit numbers. Prefer from btText; take the last line-like sequence near end:
+  const g7Candidates = btNums.filter(n=>n.length===2);
   let g7 = null;
-  // try line-based first
-  const lines = botT.split("\n").map(x=>x.trim()).filter(Boolean);
-  for(const ln of lines){
-    const a = (ln.match(/\b\d{2}\b/g)||[]);
-    if(a.length>=4){
-      g7 = a.slice(0,4);
-      break;
-    }
+  if(g7Candidates.length>=4){
+    // pick last 4 two-digit numbers (often at end)
+    g7 = g7Candidates.slice(-4);
   }
-  if(!g7 && nums2.length>=4){
-    g7 = nums2.slice(-4);
-  }
-
-  // G6: line with 3 three-digit numbers
-  let g6 = null;
-  for(const ln of lines){
-    const a = (ln.match(/\b\d{3}\b/g)||[]);
-    if(a.length>=3){
-      g6 = a.slice(0,3);
-      break;
-    }
-  }
-  if(!g6 && nums3.length>=3){
-    g6 = nums3.slice(0,3);
+  // G6: need 3 three-digit numbers
+  const g6Candidates = btNums.filter(n=>n.length===3);
+  let g6=null;
+  if(g6Candidates.length>=3){
+    // pick last 3 three-digit numbers (often right above G7)
+    g6 = g6Candidates.slice(-3);
   }
 
   const errs=[];
-  if(!db2) errs.push("MISS_DB");
-  if(!g7 || g7.length!==4) errs.push("MISS_G7");
-  if(!g6 || g6.length!==3) errs.push("MISS_G6");
+  if(!db2) errs.push('MISS_DB');
+  if(!g7) errs.push('MISS_G7');
+  if(!g6) errs.push('MISS_G6');
 
-  return { ok: errs.length===0, via:"OCR", db2, g7, g6, errs, db5 };
+  // Extra sanity: reject obvious contamination by G4/G5 (many 4-digit tokens)
+  const four = btNums.filter(n=>n.length===4).length;
+  const contamination = four>=6; // heuristic
+  if(contamination) errs.push('NOISY_BOTTOM');
+
+  return {ok: errs.length===0, errs, db2, db5, g7, g6, meta:{fourCount:four} };
 }
 
-/* ===========================
-   PHA SAFE (High safety)
-   - only if >=3 days clean
-   - HardLock day order (startDate + idx)
-   - STOP if inconsistent or noisy
-=========================== */
-function sum2(db2){
-  return (parseInt(db2[0],10)+parseInt(db2[1],10))%10;
-}
-function phaSafe(chain){
-  if(chain.length < 3){
-    return {ok:false, pha:"STOP", conf:25, note:"Thiếu dữ liệu (cần ≥3 ngày sạch)."};
+function scoreGate(g){
+  // higher is better
+  let s=0;
+  if(g.db2) s+=25;
+  if(g.g7 && g.g7.length===4) s+=30;
+  if(g.g6 && g.g6.length===3) s+=25;
+  if(g.meta?.fourCount>=6) s-=18; // noisy bottom
+  // prefer distinct g7
+  if(g.g7){
+    const uniq=new Set(g.g7).size;
+    if(uniq===4) s+=6;
   }
-  const last3 = chain.slice(-3);
-  const dbs = last3.map(x=>x.db2);
-  const sums = dbs.map(sum2);
-
-  let score = 0;
-  const notes = [];
-
-  // Rule: G7 dính lõi + G6 còn neo = còn nhịp | Bung biên = cảnh báo
-  const last = chain[chain.length-1];
-  const g7HasDB = last.g7.includes(last.db2);
-  if(g7HasDB){ score += 2; notes.push("G7 dính lõi"); }
-
-  // "G6 còn neo": any G6 ends with DB tail or shares digit
-  const g6HasTail = last.g6.some(x=>x.slice(-2)===last.db2);
-  if(g6HasTail){ score += 1; notes.push("G6 còn neo"); }
-
-  // DB repeats within last3 (lõi)
-  if(new Set(dbs).size <= 2){ score += 1; notes.push("ĐB có lõi lặp"); }
-
-  // Tổng ổn định
-  if(new Set(sums).size <= 2){ score += 1; notes.push("Tổng ổn định"); }
-
-  // Bung biên (0/9 head)
-  if(last.db2[0]==="0" || last.db2[0]==="9"){ score -= 2; notes.push("Bung biên (đầu 0/9)"); }
-
-  // Too many distinct sums indicates noise
-  if(new Set(sums).size === 3){ score -= 1; notes.push("Tổng nhiễu (3 tổng)"); }
-
-  let pha = "ĐẢO";
-  if(score >= 3) pha = "CHẠY";
-  if(score <= 0) pha = "XẢ";
-
-  let conf = 55 + score*7;
-  conf = Math.max(35, Math.min(78, conf));
-
-  // Hard STOP conditions
-  // If last day is biên AND no g7 dính lõi => STOP
-  if((last.db2[0]==="0" || last.db2[0]==="9") && !g7HasDB){
-    return {ok:false, pha:"STOP", conf:38, note:"Biên + không có lõi g7 → dễ bẫy. STOP.", notes};
-  }
-
-  return {ok:true, pha, conf, note:"Chuỗi sạch. Đủ điều kiện mở PHA SAFE.", notes};
+  return s;
 }
 
-/* ===========================
-   SOI & CHỐT (HIT@3>=2)
-   - 3 trường hợp (TH1/TH2/TH3)
-   - 1 cặp chốt (ưu tiên)
-   - 1 anti-bẫy (1 con)
-=========================== */
-function pad2(n){ return String(n).padStart(2,"0"); }
-function rotate(db2, k){
-  let x = (parseInt(db2,10)+k)%100;
-  return pad2(x);
-}
-function pickChot(chain, pha){
-  const last = chain[chain.length-1];
-  const db = last.db2;
-
-  // ưu tiên lõi = (đuôi ĐB + lõi G7)
-  const g7 = last.g7.slice();
-  // “lõi g7”: ưu tiên số trùng digit với db
-  const core = g7.find(x=>x[1]===db[1] || x[0]===db[0]) || g7[0];
-
-  if(pha==="CHẠY"){
-    // chốt bám lõi: ưu tiên db nếu g7 dính lõi, else core
-    return last.g7.includes(db) ? db : core;
-  }
-  if(pha==="ĐẢO"){
-    // đảo nhẹ quanh lõi
-    return rotate(core, 1);
-  }
-  if(pha==="XẢ"){
-    // xả: nhảy +5 để tránh dính lại
-    return rotate(db, 5);
-  }
-  return core;
-}
-function pickAnti(chain){
-  const last = chain[chain.length-1];
-  // anti bẫy: +7 (khác nhịp), hoặc lấy 1 con “lệch” không nằm trong g7
-  let anti = rotate(last.db2, 7);
-  if(last.g7.includes(anti)) anti = rotate(last.db2, 9);
-  return anti;
-}
-function directionText(pha){
-  if(pha==="CHẠY") return "Bám lõi (đuôi ĐB + lõi G7), tránh ép biên";
-  if(pha==="ĐẢO") return "Đảo/kề quanh lõi (nhẹ), không đẩy lực";
-  if(pha==="XẢ") return "Giảm lực, né biên, ưu tiên anti";
-  return "STOP";
-}
-function roleText(chain){
-  const last = chain[chain.length-1];
-  const parts=[];
-  if(last.g7.includes(last.db2)) parts.push("G7 dính lõi");
-  const g6Neo = last.g6.some(x=>x.slice(-2)===last.db2);
-  if(g6Neo) parts.push("G6 còn neo");
-  if(!parts.length) parts.push("G6/G7 không lộ rõ");
-  return parts.join(" + ");
-}
-function buildCases(chain, pha){
-  const last = chain[chain.length-1];
-  const db = last.db2;
-  const core = pickChot(chain, "CHẠY");
-  const a = pickChot(chain, pha);
-
-  // 3 TH rõ ràng
-  const th1 = (pha==="CHẠY") ? `TH1: Giữ nhịp (bám lõi) → ${a}` : `TH1: Hồi lõi → ${core}`;
-  const th2 = `TH2: Đảo 1 nhịp quanh lõi → ${rotate(a,1)} / ${rotate(a, -1)}`;
-  const th3 = `TH3: Bung/đánh lạc → ưu tiên anti ${pickAnti(chain)}`;
-  return [th1, th2, th3];
-}
-function render6Lines(chain){
-  const ps = phaSafe(chain);
-  UI.k_conf.textContent = ps.conf ? `${ps.conf}%` : "--";
-  if(!ps.ok){
-    return `1) PHA ngày: STOP
-2) Hướng chính: DỪNG (thiếu chắc)
-3) Vai trò G6–G7: ${ps.notes?.join(", ") || ps.note}
-4) Quyết định: DỪNG
-5) Chốt 1 cặp: --
-6) Anti-bẫy: -- | Tin cậy≈${ps.conf||35}%`;
-  }
-
-  const chot = pickChot(chain, ps.pha);
-  const anti = pickAnti(chain);
-  const th = buildCases(chain, ps.pha);
-
-  const play = (ps.pha==="XẢ") ? "CHƠI NHẸ/HOẶC DỪNG" : "CHƠI";
-
-  return `1) PHA ngày: ${ps.pha}
-2) Hướng chính: ${directionText(ps.pha)}
-3) Vai trò G6–G7: ${roleText(chain)}
-4) TH cụ thể: ${th[0]} | ${th[1]} | ${th[2]}
-5) Chốt 1 cặp: ${chot}
-6) Anti-bẫy: ${anti} | Quyết định: ${play} | Tin cậy≈${ps.conf}%`;
-}
-
-/* ===========================
-   Pipeline: one image -> preprocess -> 2-zone -> OCR -> gate -> save
-=========================== */
-function setTab(which){
-  document.querySelectorAll(".tab").forEach(t=>{
-    t.classList.toggle("active", t.dataset.tab===which);
-  });
-  $("cvAll").style.display = (which==="all") ? "block" : "none";
-  $("cvDB").style.display  = (which==="db") ? "block" : "none";
-  $("cvBot").style.display = (which==="bot") ? "block" : "none";
-}
-document.querySelectorAll(".tab").forEach(t=>{
-  t.addEventListener("click", ()=>setTab(t.dataset.tab));
-});
-
-async function waitOpenCVReady(timeoutMs=8000){
-  if(window.cv && cv.Mat) return true;
-  const t0=Date.now();
-  while(Date.now()-t0<timeoutMs){
-    await new Promise(r=>setTimeout(r,120));
-    if(window.cv && cv.Mat) return true;
-  }
-  return false;
-}
-
-async function processImageFile(file, idx, preset=null){
-  setStatus("ocr","warn");
-  setStatus("gate",null);
-  setStatus("pha",null);
-
-  const start = parseDateYYYYMMDD($("startDate").value);
-  if(!start) throw new Error("MISS_STARTDATE");
-
-  const img = new Image();
-  img.crossOrigin="anonymous";
-  const url = URL.createObjectURL(file);
-  await new Promise((res,rej)=>{
-    img.onload=()=>res();
-    img.onerror=()=>rej(new Error("IMG_LOAD_FAIL"));
-    img.src=url;
-  });
-
-  // draw + enhance
-  const cvAll = $("cvAll");
-  drawImageToCanvas(img, cvAll, 1.0);
-  enhanceContrast(cvAll);
-
-  // trim preset
-  const top = preset ? preset.top : 0.12;
-  const bot = preset ? preset.bot : 0.14;
-  const rectTrim = autoTrimRect(cvAll, top, bot, 0.03, 0.03);
-  const trimmed = cropCanvas(cvAll, rectTrim);
-
-  // zones
-  const z = zoneRects(trimmed);
-  const cvDB = $("cvDB");
-  const cvBot = $("cvBot");
-
-  // Render preview canvases
-  cvAll.width = trimmed.width; cvAll.height = trimmed.height;
-  cvAll.getContext("2d").drawImage(trimmed,0,0);
-  const dbC = cropCanvas(trimmed, z.db);
-  const botC = cropCanvas(trimmed, z.bot);
-
-  cvDB.width=dbC.width; cvDB.height=dbC.height;
-  cvDB.getContext("2d").drawImage(dbC,0,0);
-
-  cvBot.width=botC.width; cvBot.height=botC.height;
-  cvBot.getContext("2d").drawImage(botC,0,0);
-
-  // OCR
-  UI.rawDB.textContent="(OCR...)";
-  UI.rawBot.textContent="(OCR...)";
-  const rawDB = await ocrCanvas(dbC);
-  const rawBot = await ocrCanvas(botC);
-
-  state.lastOCR.db = rawDB;
-  state.lastOCR.bot = rawBot;
-  UI.rawDB.textContent = rawDB.trim() ? rawDB : "(rỗng)";
-  UI.rawBot.textContent = rawBot.trim() ? rawBot : "(rỗng)";
-  setStatus("ocr","ok");
-
-  // Gate
-  setStatus("gate","warn");
-  const gate = gateFromOCR(rawDB, rawBot, $("manualFix").value);
-  state.lastGate = gate;
-
-  const day = fmtDate(addDaysUTC(start, idx));
-  const outLines = [];
-  outLines.push(`GATE: ${gate.ok ? "OK" : "FAIL"} (via=${gate.via})`);
-  if(!gate.ok) outLines.push(`errs=${gate.errs.join(",")}`);
-  outLines.push(`day=${day}`);
-  outLines.push(`DB=${gate.db2||"--"} | G7=${gate.g7?gate.g7.join(" "):"--"} | G6=${gate.g6?gate.g6.join(" "):"--"}`);
-  UI.gateOut.textContent = outLines.join("\n");
-
-  if(!gate.ok){
-    setStatus("gate","bad");
-    throw new Error("GATE_FAIL");
-  }
-  setStatus("gate","ok");
-
-  // Save day record
-  const rec = { day, db2: gate.db2, g7: gate.g7, g6: gate.g6, meta:{via:gate.via} };
-  return rec;
-}
-
-function hardLockAndMerge(records){
-  // HardLock: unique by day, sorted by day asc
-  const map = new Map();
-  for(const r of state.chain) map.set(r.day, r);
-  for(const r of records) map.set(r.day, r);
-
-  const arr = Array.from(map.values()).sort((a,b)=>a.day.localeCompare(b.day));
-
-  // Gate-3: no day jump backwards is already prevented by sort + HardAssign;
-  // but we enforce continuity for the newly added block if needed.
-  state.chain = arr;
-  saveChain();
-
-  // PHA SAFE output
-  const ps = phaSafe(state.chain);
-  const block = [];
-  block.push(`Chuỗi đã lưu (theo ngày): ${state.chain.length} ngày`);
-  block.push(state.chain.slice(-7).map(x=>`${x.day} | DB=${x.db2} | G7=${x.g7.join(" ")} | G6=${x.g6.join(" ")}`).join("\n"));
-  block.push("\n---");
-  block.push(`PHA: ${ps.ok ? ps.pha : "STOP"}`);
-  block.push(ps.note);
-  if(ps.notes && ps.notes.length) block.push(`Notes: ${ps.notes.join(", ")}`);
-  block.push(`Confidence≈${ps.conf}%`);
-  UI.phaOut.textContent = block.join("\n");
-  setStatus("pha", ps.ok ? "ok" : "bad");
-  UI.k_conf.textContent = `${ps.conf}%`;
-}
-
-/* ===========================
-   Batch run
-=========================== */
-async function runBatch(files, useRescue=false){
-  const start = parseDateYYYYMMDD($("startDate").value);
-  if(!start){
-    alert("Bạn chưa nhập StartDate đúng format YYYY-MM-DD.");
-    return;
-  }
-  UI.chotOut.textContent="(chưa chốt)";
-  setStatus("pha", null);
-
-  state.ok=0; state.fail=0;
-  UI.k_ok.textContent="0"; UI.k_fail.textContent="0";
-
-  const recs = [];
-  for(let i=0;i<files.length;i++){
-    try{
-      let rec=null;
-      if(useRescue){
-        let lastErr=null;
-        for(const p of RESCUE_PRESETS){
-          try{
-            rec = await processImageFile(files[i], i, p);
-            break;
-          }catch(e){ lastErr=e; }
-        }
-        if(!rec) throw lastErr || new Error("RESCUE_FAIL");
-      }else{
-        rec = await processImageFile(files[i], i, null);
-      }
-      recs.push(rec);
-      state.ok++; UI.k_ok.textContent=String(state.ok);
-    }catch(e){
-      state.fail++; UI.k_fail.textContent=String(state.fail);
-      // keep going
+async function ocrCanvas(canvas, psm=6){
+  const worker = await Tesseract.createWorker('eng', 1, {
+    logger: m => {
+      // keep quiet; could log progress if needed
     }
-  }
-
-  if(recs.length){
-    hardLockAndMerge(recs);
-  }else{
-    UI.phaOut.textContent="PHA: STOP\nKhông có ngày sạch để lưu.";
-    setStatus("pha","bad");
-  }
+  });
+  await worker.setParameters({
+    tessedit_pageseg_mode: String(psm),
+    // whitelist digits and basic letters (VE/DB lines)
+    tessedit_char_whitelist: '0123456789VEveDBdbĐđ '
+  });
+  const { data } = await worker.recognize(canvas);
+  await worker.terminate();
+  return { text: normalizeText(data.text), conf: data.confidence ?? 0 };
 }
 
-/* ===========================
-   Buttons
-=========================== */
-$("file").addEventListener("change", (e)=>{
-  state.images = Array.from(e.target.files||[]);
-});
+async function runOnePreset(img, preset){
+  const zones = getZones(img, preset);
+  const dbCv = zones.make(zones.db.sx, zones.db.sy, zones.db.sw, zones.db.sh);
+  const btCv = zones.make(zones.bt.sx, zones.bt.sy, zones.bt.sw, zones.bt.sh);
 
-$("btnFull").addEventListener("click", async ()=>{
-  if(!state.images.length){
-    alert("Chưa chọn ảnh.");
-    return;
-  }
-  setStatus("ocr","warn");
-  await runBatch(state.images, false);
-});
+  // OCR 2 zone with slightly different psm
+  const [dbRes, btRes] = await Promise.all([
+    ocrCanvas(dbCv, 6),
+    ocrCanvas(btCv, 6),
+  ]);
 
-$("btnRescue").addEventListener("click", async ()=>{
-  if(!state.images.length){
-    alert("Chưa chọn ảnh.");
-    return;
-  }
-  setStatus("ocr","warn");
-  await runBatch(state.images, true);
-});
-
-$("btnReset").addEventListener("click", ()=>{
-  if(confirm("RESET SẠCH: xóa dữ liệu local + batch?")){
-    localStorage.removeItem(LS_KEY);
-    localStorage.removeItem(LS_META);
-    resetAll();
-  }
-});
-
-$("btnAnalyze").addEventListener("click", ()=>{
-  loadChain();
-  const out = render6Lines(state.chain);
-  UI.chotOut.textContent = out;
-});
-
-$("btnExport").addEventListener("click", ()=>{
-  loadChain();
-  const blob = new Blob([JSON.stringify({v:"ULTRA_V3", chain: state.chain}, null, 2)], {type:"application/json"});
-  const a=document.createElement("a");
-  a.href=URL.createObjectURL(blob);
-  a.download="BH_ULTRA_V3_export.json";
-  a.click();
-});
-
-$("btnImport").addEventListener("click", async ()=>{
-  const inp=document.createElement("input");
-  inp.type="file"; inp.accept="application/json";
-  inp.onchange=async ()=>{
-    const f=inp.files[0]; if(!f) return;
-    const txt=await f.text();
-    try{
-      const obj=JSON.parse(txt);
-      if(!obj.chain || !Array.isArray(obj.chain)) throw new Error("BAD_JSON");
-      state.chain = obj.chain;
-      saveChain();
-      hardLockAndMerge([]);
-      alert("Import OK.");
-    }catch(e){
-      alert("Import FAIL: file không hợp lệ.");
-    }
+  const gate = gateParse(dbRes.text, btRes.text);
+  const score = scoreGate(gate) + (dbRes.conf + btRes.conf) * 0.10; // add mild conf
+  return {
+    preset: preset.name,
+    dbText: dbRes.text, btText: btRes.text,
+    conf: {db: dbRes.conf, bt: btRes.conf},
+    gate, score
   };
-  inp.click();
+}
+
+async function runVote(img, passes=6){
+  const results=[];
+  for(let i=0;i<Math.min(passes, state.presets.length);i++){
+    const preset=state.presets[i];
+    try{
+      results.push(await runOnePreset(img, preset));
+    }catch(e){
+      results.push({preset:preset.name, error:String(e), score:-999, gate:{ok:false, errs:['OCR_ERR']}});
+    }
+  }
+  results.sort((a,b)=>b.score-a.score);
+  return {winner:results[0], all:results};
+}
+
+// ===== Timeline commit/quarantine
+function computeNextDay(){
+  const sd=parseDateISO($('startDate').value.trim());
+  if(!sd) return null;
+  const store=loadStore();
+  // next day = startDate + store.length
+  return addDays(sd, store.length);
+}
+
+function commitDay(entry){
+  const store=loadStore();
+  // enforce unique day: overwrite if same day exists
+  const idx = store.findIndex(x=>x.day===entry.day);
+  if(idx>=0) store[idx]=entry; else store.push(entry);
+  // sort by day
+  store.sort((a,b)=>a.day.localeCompare(b.day));
+  saveStore(store);
+}
+
+function quarantineAdd(item){
+  const q=loadQuar();
+  q.unshift(item);
+  // keep last 50
+  saveQuar(q.slice(0,50));
+}
+
+// ===== PHA SAFE + SOI engine (đủ dùng + đúng yêu cầu format)
+function getCoreDigits(last){
+  // lõi = (đuôi ĐB + lõi G7)  (theo yêu cầu của Hào)
+  // Implement: core digits = last.db2 last digit + all last digits of g7 numbers
+  const core=new Set();
+  if(last?.db2) core.add(last.db2[1]);
+  if(last?.g7){
+    last.g7.forEach(x=> core.add(String(x).slice(-1)));
+  }
+  return [...core].sort();
+}
+
+function isBienHeavy(day){
+  // “biên” = 0/9 xuất hiện nhiều ở DB2/G7
+  const s = (day.db2||'') + ' ' + (day.g7||[]).join(' ');
+  const zeros = (s.match(/0/g)||[]).length;
+  const nines = (s.match(/9/g)||[]).length;
+  return (zeros+nines)>=3;
+}
+
+function noiseScore(days){
+  // heuristic: nhiều tổng (sum last digits) trùng + biên nặng => nhiễu
+  let n=0;
+  const sums=[];
+  for(const d of days){
+    if(!d.db2) continue;
+    const a=Number(d.db2[0]), b=Number(d.db2[1]);
+    sums.push((a+b)%10);
+  }
+  const uniq=new Set(sums).size;
+  if(uniq<=Math.max(1, Math.floor(sums.length/2))) n+=2;
+  if(days.some(isBienHeavy)) n+=2;
+  return n; // 0..4
+}
+
+function detectPha(days){
+  // ultra simple pha detector: dựa trên biên + độ lặp lõi
+  // Output: "MỞ|CHẠY|ĐẢO|XẢ|STOP"
+  if(days.length<3) return {pha:'STOP', conf:25, note:'Thiếu dữ liệu sạch (cần ≥ 3 ngày commit).'};
+  const last=days[days.length-1];
+  const core=getCoreDigits(last);
+  const bien=isBienHeavy(last);
+
+  // core strength: how many last-2 days share core digits in g7 last digits
+  let coreHit=0;
+  for(const d of days.slice(-3)){
+    const cd=new Set(getCoreDigits(d));
+    const inter=core.filter(x=>cd.has(x)).length;
+    if(inter>=2) coreHit++;
+  }
+
+  let pha='CHẠY';
+  let conf=55;
+  let note='Chuỗi sạch.';
+
+  const n=noiseScore(days);
+  if(n>=4){
+    pha='XẢ';
+    conf=48;
+    note='Tổng nhiễu cao (biên/tổng).';
+  }else if(bien && coreHit<=1){
+    pha='STOP';
+    conf=35;
+    note='Biên + thiếu lõi → dễ bẫy.';
+  }else if(coreHit>=3 && !bien){
+    pha='CHẠY';
+    conf=62;
+    note='Lõi dính đều → còn nhịp.';
+  }else if(coreHit>=2 && bien){
+    pha='ĐẢO';
+    conf=55;
+    note='Có lõi nhưng biên chen → dễ đảo nhịp.';
+  }else{
+    pha='MỞ';
+    conf=52;
+    note='Dữ liệu ổn nhưng lõi chưa chặt.';
+  }
+  return {pha, conf, note, core, noise:n};
+}
+
+function bóng(n2){
+  // bóng = 9-x (2 số)
+  const a=Number(n2[0]), b=Number(n2[1]);
+  return `${9-a}${9-b}`;
+}
+function đảo(n2){ return `${n2[1]}${n2[0]}`; }
+
+function buildScenarios(days){
+  const last=days[days.length-1];
+  const core=getCoreDigits(last);
+  const corePick = core.length? core[core.length-1] : last?.db2?.[1] || '0';
+
+  // TH1: Hồi lõi -> XY với Y=corePick (ưu tiên giữ đuôi)
+  const th1 = `${last.db2[0]}${corePick}`;
+
+  // TH2: Đảo 1 nhịp quanh lõi -> đảo DB2
+  const th2 = đảo(last.db2);
+
+  // TH3: Bung/đánh lạc -> bóng DB2 (anti)
+  const th3 = bóng(last.db2);
+
+  // Anti-bẫy: ưu tiên anti theo "bóng" hoặc "biên" tùy pha
+  const anti = th3; // default anti = bóng
+
+  // Rank heuristic: nếu pha CHẠY => ưu tiên TH1/TH2; nếu XẢ/STOP => ưu tiên anti
+  return { core, th1, th2, th3, anti };
+}
+
+function chot6Lines(days){
+  const phaInfo=detectPha(days);
+  const last=days[days.length-1];
+  const {th1,th2,th3,anti,core}=buildScenarios(days);
+
+  let huong='Giảm lực, né biên, ưu tiên anti';
+  let vai='G6/G7 chưa lộ rõ';
+  let decision='DỪNG';
+  let chot='--';
+  let antiPick=anti;
+
+  if(phaInfo.pha==='CHẠY'){
+    huong='Bám lõi, ưu tiên hồi lõi / đảo nhẹ';
+    vai='G7 dính lõi + G6 còn neo = còn nhịp';
+    decision='CHƠI NHẸ';
+    chot = th1;
+  }else if(phaInfo.pha==='ĐẢO'){
+    huong='Đảo nhịp, chốt theo TH2 + kèm anti';
+    vai='G7 có lõi nhưng biên chen → đề phòng đảo';
+    decision='CHƠI NHẸ';
+    chot = th2;
+  }else if(phaInfo.pha==='MỞ'){
+    huong='Thăm dò, ưu tiên TH1; thiếu lõi thì dừng';
+    vai='G6/G7 mới mở, chưa khóa trục';
+    decision='CHƠI RẤT NHẸ / HOẶC DỪNG';
+    chot = th1;
+  }else if(phaInfo.pha==='XẢ'){
+    huong='Xả/nhiễu: né biên, ưu tiên anti, không ép trục';
+    vai='G6/G7 nhiễu, dễ kéo sai nhịp';
+    decision='CHƠI ANTI / HOẶC DỪNG';
+    chot = th3; // anti as “chốt”
+  }else{
+    huong='STOP theo PHA SAFE (thiếu lõi/biên/nhiễu)';
+    vai='Không đủ điều kiện khóa pha';
+    decision='STOP';
+    chot = '--';
+  }
+
+  // If STOP, force anti only
+  if(phaInfo.pha==='STOP'){
+    antiPick = bóng(last.db2);
+  }
+
+  // 6 lines strict
+  const lines = [
+    `1) PHA ngày: ${phaInfo.pha}`,
+    `2) Hướng chính: ${huong}`,
+    `3) Vai trò G6–G7: ${vai}`,
+    `4) TH cụ thể: TH1(Hồi lõi→${th1}) | TH2(Đảo nhịp→${th2}) | TH3(Bung/anti→${th3})`,
+    `5) Chốt 1 cặp: ${chot}`,
+    `6) Anti-bẫy: ${antiPick} | Quyết định: ${decision} | Tin cậy≈${Math.round(phaInfo.conf)}%`
+  ];
+  return {lines, phaInfo};
+}
+
+// ===== UI render
+function renderLists(){
+  const store=loadStore();
+  const q=loadQuar();
+  $('kDays').textContent=String(store.length);
+  $('savedList').textContent = store.length
+    ? store.map(x=>`${x.day} | DB=${x.db2} | G7=${x.g7.join(' ')} | G6=${x.g6.join(' ')}`).join('\n')
+    : '—';
+
+  $('quarantineList').textContent = q.length
+    ? q.map(x=>`[${x.when}] ${x.name||'image'} | errs=${(x.errs||[]).join(',')} | note=${x.note||''}`).join('\n')
+    : '—';
+}
+
+function renderChot(){
+  const store=loadStore();
+  const lastN = store.slice(-5); // analyze last 5 clean days
+  if(lastN.length<3){
+    $('chot6').textContent='Chưa đủ dữ liệu sạch (cần ≥ 3 ngày commit).';
+    $('kConf').textContent='0%';
+    return;
+  }
+  const {lines, phaInfo} = chot6Lines(lastN);
+  $('chot6').textContent = lines.join('\n');
+  $('kConf').textContent = `${Math.round(phaInfo.conf)}%`;
+}
+
+function renderKPI(){
+  $('kOK').textContent=String(state.ok);
+  $('kFail').textContent=String(state.fail);
+}
+
+// ===== Main run
+async function runBatch({rescue=false}={}){
+  if(state.running) return;
+  state.running=true;
+  try{
+    const sd = parseDateISO($('startDate').value.trim());
+    if(!sd){
+      toast('StartDate sai định dạng. VD: 2026-02-28');
+      return;
+    }
+    if(state.images.length===0){
+      toast('Chưa chọn ảnh.');
+      return;
+    }
+
+    state.ok=0; state.fail=0; renderKPI();
+    $('gateOut').textContent='Đang chạy...';
+
+    // Process sequential to avoid mobile crash
+    for(let i=0;i<state.images.length;i++){
+      state.currentIndex=i;
+      renderPreview();
+
+      const img=state.images[i].img;
+      const name=state.images[i].name;
+
+      // Manual fix override (optional)
+      const mf = $('manualFix').value.trim();
+      let usedManual=false;
+      let manualParsed=null;
+      if(mf){
+        // parse: DB=xx | G7=a b c d | G6=xxx yyy zzz
+        const mdb = mf.match(/DB\s*=\s*(\d{2})/i);
+        const mg7 = mf.match(/G7\s*=\s*([0-9 ]{8,20})/i);
+        const mg6 = mf.match(/G6\s*=\s*([0-9 ]{8,20})/i);
+        if(mdb && mg7 && mg6){
+          const g7 = mg7[1].trim().split(/\s+/).filter(x=>/^\d{2}$/.test(x)).slice(0,4);
+          const g6 = mg6[1].trim().split(/\s+/).filter(x=>/^\d{3}$/.test(x)).slice(0,3);
+          if(g7.length===4 && g6.length===3){
+            manualParsed = { ok:true, errs:[], db2:mdb[1], g7, g6 };
+            usedManual=true;
+          }
+        }
+      }
+
+      let winner=null;
+
+      if(usedManual){
+        winner = {
+          preset:'MANUAL',
+          dbText:'(manual)', btText:'(manual)',
+          conf:{db:100, bt:100},
+          gate:manualParsed,
+          score:999
+        };
+      }else{
+        // vote: normal pass = 4, rescue pass = 6
+        const vote = await runVote(img, rescue ? 6 : 4);
+        winner = vote.winner;
+      }
+
+      // show raw winner OCR
+      $('ocrDB').value = winner.dbText || '';
+      $('ocrBT').value = winner.btText || '';
+
+      // Gate final
+      const g = winner.gate;
+      const nextDay = computeNextDay();
+      const day = nextDay ? fmtDate(nextDay) : null;
+
+      if(g.ok && day){
+        // commit
+        commitDay({
+          day,
+          db2: g.db2,
+          g7: g.g7,
+          g6: g.g6,
+          via: usedManual ? 'MANUAL' : `OCR:${winner.preset}`,
+          ts: Date.now(),
+          src: name
+        });
+        state.ok++;
+        $('gateOut').textContent =
+          `GATE: OK  (${usedManual ? 'via=MANUAL' : 'via=OCR'})\n`+
+          `day=${day}\n`+
+          `DB=${g.db2} | G7=${g.g7.join(' ')} | G6=${g.g6.join(' ')}\n`+
+          `preset=${winner.preset} score=${Math.round(winner.score)} conf(db/bt)=${Math.round(winner.conf.db)}/${Math.round(winner.conf.bt)}\n`+
+          `Commit: OK (dayPointer++)`;
+      }else{
+        // quarantine
+        state.fail++;
+        quarantineAdd({
+          when: new Date().toLocaleString(),
+          name,
+          errs: g.errs || ['GATE_FAIL'],
+          note: usedManual ? 'Manual parse fail' : `bestPreset=${winner.preset} score=${Math.round(winner.score)}`
+        });
+        $('gateOut').textContent =
+          `GATE: FAIL\n`+
+          `errs=${(g.errs||[]).join(',')}\n`+
+          `${usedManual ? 'via=MANUAL' : 'via=OCR'} preset=${winner.preset}\n`+
+          `Quarantine: ON (không tăng dayPointer)\n`+
+          `Gợi ý: bật Rescue / crop sát bảng / hoặc dán Manual Fix.`;
+      }
+
+      renderKPI();
+      renderLists();
+      renderChot();
+    }
+
+    toast(`Xong: OK=${state.ok} | FAIL=${state.fail}`);
+  } finally{
+    state.running=false;
+  }
+}
+
+// ===== File input
+$('files').addEventListener('change', async (e)=>{
+  const files=[...e.target.files||[]];
+  if(!files.length) return;
+
+  state.images=[];
+  for(const f of files){
+    const url=URL.createObjectURL(f);
+    const img=new Image();
+    img.src=url;
+    await new Promise(res=>{ img.onload=res; img.onerror=res; });
+    state.images.push({file:f, img, name:f.name});
+  }
+  state.currentIndex=0;
+  renderPreview();
+  toast(`Đã nạp ${state.images.length} ảnh`);
 });
 
-$("btnPaste").addEventListener("click", ()=>{
-  // Dán mẫu hướng dẫn manual fix
-  $("manualFix").value = "DB=83 | G7=57 42 39 13 | G6=247 554 108";
-  $("startDate").value = $("startDate").value || "2026-02-28";
-  alert("Đã dán mẫu Manual Fix. (Chỉ dùng khi Gate fail)");
+// ===== Buttons
+$('btnRun').addEventListener('click', ()=>runBatch({rescue:false}));
+$('btnRescue').addEventListener('click', ()=>runBatch({rescue:true}));
+
+$('btnReset').addEventListener('click', ()=>{
+  if(!confirm('RESET SẠCH: xóa dữ liệu Save + Quarantine?')) return;
+  localStorage.removeItem(state.storeKey);
+  localStorage.removeItem(state.qKey);
+  state.ok=0; state.fail=0;
+  renderKPI(); renderLists(); renderChot();
+  $('gateOut').textContent='—';
+  $('ocrDB').value=''; $('ocrBT').value='';
+  toast('Đã reset sạch');
 });
 
-/* ===========================
-   Init
-=========================== */
-loadChain();
-hardLockAndMerge([]); // refresh PHA box
+$('btnAnalyze').addEventListener('click', ()=>{
+  renderChot();
+  toast('Đã cập nhật SOI & CHỐT');
+});
 
-// default startDate if empty: today (VN)
-(function initDate(){
-  if($("startDate").value.trim()) return;
-  const now = new Date();
-  const d = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
-  $("startDate").value = fmtDate(d);
+$('btnExport').addEventListener('click', ()=>{
+  const payload={
+    meta:{app:'BH_ULTRA_V4', ts:Date.now()},
+    startDate:$('startDate').value.trim(),
+    store:loadStore(),
+    quarantine:loadQuar()
+  };
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`BH_ULTRA_V4_${Date.now()}.json`;
+  a.click();
+  toast('Đã export JSON');
+});
+
+$('btnImport').addEventListener('click', ()=> $('importFile').click());
+$('importFile').addEventListener('change', async (e)=>{
+  const f=e.target.files?.[0]; if(!f) return;
+  try{
+    const txt=await f.text();
+    const j=JSON.parse(txt);
+    if(j?.store) saveStore(j.store);
+    if(j?.quarantine) saveQuar(j.quarantine);
+    if(j?.startDate) $('startDate').value=j.startDate;
+    renderLists(); renderChot();
+    toast('Import OK');
+  }catch(err){
+    toast('Import FAIL: file không hợp lệ');
+  }finally{
+    e.target.value='';
+  }
+});
+
+// “Dán mẫu”: tạo chuỗi demo (không cần ảnh)
+$('btnSample').addEventListener('click', ()=>{
+  $('startDate').value = $('startDate').value.trim() || '2026-02-28';
+  const sd=parseDateISO($('startDate').value.trim());
+  if(!sd){ toast('StartDate sai'); return; }
+  const demo=[
+    {db2:'81', g7:['75','42','09','81'], g6:['586','074','150']},
+    {db2:'13', g7:['91','14','96','09'], g6:['243','887','936']},
+    {db2:'12', g7:['30','88','09','33'], g6:['003','214','087']},
+    {db2:'74', g7:['45','43','00','57'], g6:['396','332','669']},
+    {db2:'37', g7:['95','36','37','42'], g6:['344','904','115']},
+  ];
+  const store=demo.map((d,i)=>({
+    day: fmtDate(addDays(sd,i)),
+    ...d, via:'SAMPLE', ts:Date.now()
+  }));
+  saveStore(store);
+  saveQuar([]);
+  renderLists(); renderChot();
+  toast('Đã dán mẫu demo (5 ngày sạch)');
+});
+
+// ===== Init
+(function init(){
+  // set default start date if empty
+  const today=new Date();
+  const def = fmtDate(new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate())));
+  $('startDate').value = $('startDate').value.trim() || def;
+
+  renderLists();
+  renderChot();
+  renderPreview();
+  toast('ULTRA V4 sẵn sàng');
 })();
-
 </script>
 </body>
 </html>
