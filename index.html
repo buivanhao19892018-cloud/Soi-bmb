@@ -3,1157 +3,745 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>Bùi Hào — PWA SOI ĐB (OCR Gate • Pha Safe)</title>
+  <meta name="theme-color" content="#0b1220" />
+  <title>Bùi Hào — Lotto ULTRA MASTER (V2 • 2-ZONE OCR • PHA SAFE HardLock)</title>
 
-  <!-- Manifest as data URL (single-file friendly; SW offline cache requires extra file normally) -->
-  <link rel="manifest" href='data:application/manifest+json,{"name":"Bùi Hào — SOI ĐB","short_name":"SOI ĐB","start_url":".","display":"standalone","background_color":"#070b18","theme_color":"#0b1228","icons":[{"src":"data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22512%22 height=%22512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%2296%22 fill=%22%230b1228%22/%3E%3Ctext x=%2250%25%22 y=%2252%25%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 font-size=%2296%22 fill=%22%23ffffff%22 font-family=%22Arial%22%3EULTRA%3C/text%3E%3C/svg%3E","sizes":"512x512","type":"image/svg+xml"}]}' />
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 
   <style>
     :root{
-      --bg:#070b18;
-      --card:#0b1228;
-      --card2:#0f1b3a;
-      --txt:#e9eefc;
-      --muted:#9fb0e6;
-      --line:rgba(255,255,255,.08);
-      --ok:#16c784;
-      --warn:#f5b800;
-      --bad:#ff4d4f;
-      --btn:#2f6bff;
-      --btn2:#1a2a55;
-      --chip:#0c1736;
-      --shadow: 0 12px 40px rgba(0,0,0,.45);
-      --radius: 18px;
+      --bg:#0b1220; --card:rgba(255,255,255,.06); --text:#e8eefc; --muted:rgba(232,238,252,.7);
+      --ok:#2fe39b; --warn:#f7c948; --bad:#ff4d6d; --btn:#2d6cdf; --line:rgba(255,255,255,.08);
+      --radius:18px; --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
     }
     *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: radial-gradient(1200px 700px at 20% -10%, rgba(47,107,255,.25), transparent 55%),
-                  radial-gradient(1000px 600px at 80% 0%, rgba(22,199,132,.16), transparent 55%),
-                  var(--bg);
-      color:var(--txt);
-    }
-    .wrap{
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 18px 14px 80px;
-    }
-    .hero{
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      border:1px solid var(--line);
-      border-radius: 22px;
-      padding: 16px 16px 14px;
-      box-shadow: var(--shadow);
-    }
-    h1{
-      margin: 6px 0 10px;
-      font-size: 22px;
-      line-height: 1.25;
-      letter-spacing:.2px;
-    }
-    .sub{
-      margin:0 0 14px;
-      color:var(--muted);
-      font-size: 13px;
-      line-height: 1.45;
-    }
-    .row{display:flex; gap:12px; flex-wrap:wrap}
-    .chip{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:10px 12px;
-      border-radius:999px;
-      background: rgba(12,23,54,.7);
-      border:1px solid var(--line);
-      color:var(--muted);
-      font-size: 13px;
-      user-select:none;
-      white-space:nowrap;
-    }
-    .dot{width:10px;height:10px;border-radius:50%}
-    .dot.ok{background:var(--ok)}
-    .dot.warn{background:var(--warn)}
-    .dot.bad{background:var(--bad)}
-    .btnbar{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
-    button{
-      border:0;
-      border-radius: 14px;
-      padding: 12px 14px;
-      font-weight: 700;
-      color:white;
-      background: var(--btn);
-      cursor:pointer;
-      box-shadow: 0 10px 26px rgba(47,107,255,.22);
-    }
-    button.secondary{
-      background: rgba(255,255,255,.06);
-      border:1px solid var(--line);
-      box-shadow:none;
-      color: var(--txt);
-    }
-    button.danger{
-      background: var(--bad);
-      box-shadow: 0 10px 26px rgba(255,77,79,.22);
-    }
-    button:disabled{
-      opacity:.55; cursor:not-allowed;
-      box-shadow:none;
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 12px;
-      margin-top: 12px;
-    }
-    @media (max-width: 880px){
-      .grid{grid-template-columns:1fr}
-    }
-    .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-      border:1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 14px;
-    }
-    .card h2{
-      margin: 0 0 10px;
-      font-size: 16px;
-      color: #dbe6ff;
-    }
-    .help{
-      color:var(--muted);
-      font-size: 12.5px;
-      line-height: 1.45;
-      margin:0 0 10px;
-    }
-    .preview{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:10px;
-    }
-    @media (max-width: 520px){
-      .preview{grid-template-columns: repeat(2, 1fr);}
-    }
-    .thumb{
-      border:1px solid var(--line);
-      border-radius: 14px;
-      overflow:hidden;
-      background: rgba(0,0,0,.2);
-      position:relative;
-      aspect-ratio: 9/16;
-    }
-    .thumb img{
-      width:100%; height:100%;
-      object-fit: cover;
-      display:block;
-    }
-    .thumb .badge{
-      position:absolute; left:8px; top:8px;
-      padding:6px 8px;
-      border-radius: 999px;
-      background: rgba(11,18,40,.78);
-      border:1px solid var(--line);
-      color: #cfe0ff;
-      font-size: 12px;
-      display:flex; gap:6px; align-items:center;
-    }
-    .thumb .badge .mini{width:8px;height:8px;border-radius:50%}
-    .mini.ok{background:var(--ok)}
-    .mini.warn{background:var(--warn)}
-    .mini.bad{background:var(--bad)}
-
-    .field{
-      display:flex; flex-direction:column; gap:8px;
-      margin-top:10px;
-    }
-    label{
-      font-size: 12px;
-      color: var(--muted);
-    }
-    input[type="text"], input[type="date"], textarea{
-      width:100%;
-      padding: 12px 12px;
-      border-radius: 14px;
-      border:1px solid var(--line);
-      background: rgba(0,0,0,.18);
-      color: var(--txt);
-      outline:none;
-    }
-    textarea{min-height: 120px; resize: vertical;}
-    .split{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px;
-    }
-    @media (max-width: 520px){
-      .split{grid-template-columns:1fr}
-    }
-    .pillbar{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
-    .pill{
-      padding: 9px 10px;
-      border-radius: 999px;
-      border:1px solid var(--line);
-      background: rgba(12,23,54,.55);
-      color: var(--muted);
-      font-size: 12.5px;
-      display:flex; gap:8px; align-items:center;
-    }
-    .pill strong{color:#eaf1ff}
-    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;}
-    .hr{height:1px;background:var(--line);margin:12px 0}
-
-    .tbl{
-      width:100%;
-      border-collapse: collapse;
-      font-size: 12.5px;
-      overflow:hidden;
-      border-radius: 14px;
-      border:1px solid var(--line);
-    }
-    .tbl th,.tbl td{
-      padding: 10px 10px;
-      border-bottom: 1px solid var(--line);
-      vertical-align: top;
-    }
-    .tbl th{
-      text-align:left;
-      color:#cfe0ff;
-      background: rgba(255,255,255,.03);
-    }
-    .tbl tr:last-child td{border-bottom:0}
-    .right{text-align:right}
-    .kq{
-      padding: 12px;
-      border-radius: 16px;
-      border:1px solid var(--line);
-      background: rgba(0,0,0,.18);
-    }
-    .kq .line{
-      display:flex; justify-content:space-between; gap:10px;
-      padding:6px 0;
-      border-bottom:1px dashed rgba(255,255,255,.09);
-      font-size: 13px;
-    }
-    .kq .line:last-child{border-bottom:0}
-    .tag{
-      font-size: 11.5px;
-      padding: 6px 8px;
-      border-radius: 999px;
-      border:1px solid var(--line);
-      background: rgba(12,23,54,.55);
-      color: var(--muted);
-    }
-    .bigmode{
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      padding: 12px;
-      border-radius: 16px;
-      border:1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.18));
-      margin-top: 10px;
-    }
-    .bigmode .m{
-      font-size: 14px;
-      font-weight: 900;
-      letter-spacing:.4px;
-    }
-    .bigmode .pct{
-      font-size: 20px;
-      font-weight: 900;
-    }
-    .note{
-      color: var(--muted);
-      font-size: 12.5px;
-      margin-top: 8px;
-      line-height: 1.45;
-    }
-    .footer{
-      position: fixed;
-      left:0; right:0; bottom:0;
-      background: rgba(7,11,24,.78);
-      border-top:1px solid var(--line);
-      backdrop-filter: blur(12px);
-      padding: 10px 12px;
-    }
-    .footer .wrap2{
-      max-width: 980px;
-      margin: 0 auto;
-      display:flex; gap:10px; flex-wrap:wrap; justify-content:space-between; align-items:center;
-    }
-    .footer .miniinfo{color:var(--muted);font-size:12.5px}
-    a{color:#9fc2ff}
+    body{margin:0; font-family:var(--sans); color:var(--text);
+      background:radial-gradient(1200px 900px at 20% 10%, #152348, transparent 60%),
+                 radial-gradient(900px 700px at 80% 30%, #153a2d, transparent 55%),
+                 var(--bg);}
+    .wrap{max-width:1060px; margin:0 auto; padding:18px 14px 28px;}
+    .title{font-size:22px; font-weight:900; margin:6px 0;}
+    .sub{color:var(--muted); font-size:13px; line-height:1.4; margin:0 0 14px;}
+    .card{background:linear-gradient(180deg, var(--card), rgba(255,255,255,.03)); border:1px solid var(--line);
+      border-radius:var(--radius); padding:14px;}
+    .row{display:flex; flex-wrap:wrap; gap:10px; align-items:center;}
+    .pill{display:inline-flex; align-items:center; gap:8px; padding:9px 12px; border-radius:999px;
+      background:rgba(255,255,255,.06); border:1px solid var(--line); font-size:12px; color:var(--muted);}
+    .dot{width:9px; height:9px; border-radius:999px; background:var(--warn);}
+    .dot.ok{background:var(--ok)} .dot.bad{background:var(--bad)}
+    .btn{appearance:none; border:0; border-radius:14px; padding:11px 14px; font-weight:900; cursor:pointer;
+      background:linear-gradient(180deg, rgba(45,108,223,.95), rgba(45,108,223,.75)); color:white;
+      box-shadow:0 10px 30px rgba(45,108,223,.22);}
+    .btn.secondary{background:rgba(255,255,255,.07); color:var(--text); border:1px solid var(--line); box-shadow:none;}
+    .btn.danger{background:linear-gradient(180deg, rgba(255,77,109,.95), rgba(255,77,109,.72));}
+    .btn.small{padding:9px 12px; font-size:12px; border-radius:12px;}
+    .btn:disabled{opacity:.55; cursor:not-allowed;}
+    .in{width:100%; padding:12px 12px; border-radius:14px; background:rgba(0,0,0,.22); border:1px solid var(--line);
+      color:var(--text); outline:none;}
+    .in::placeholder{color:rgba(232,238,252,.35)}
+    label{font-size:12px; color:var(--muted); display:block; margin:10px 0 6px;}
+    .grid{display:grid; gap:12px;}
+    @media(min-width:980px){ .grid{grid-template-columns:1.05fr .95fr;} }
+    .kpi{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px;}
+    .box{background:rgba(255,255,255,.04); border:1px solid var(--line); border-radius:16px; padding:12px;}
+    .big{font-size:34px; font-weight:900; letter-spacing:.4px;}
+    .cap{color:var(--muted); font-size:12px; margin-top:2px;}
+    .hr{height:1px; background:var(--line); margin:14px 0;}
+    .mono{font-family:var(--mono); font-size:12.5px; line-height:1.4; white-space:pre-wrap; word-break:break-word;}
+    .boxmono{background:rgba(0,0,0,.25); border:1px solid var(--line); border-radius:16px; padding:12px;}
+    .hint{color:var(--muted); font-size:12px; line-height:1.45;}
+    .preview{width:100%; border-radius:16px; background:#0a0f1b; border:1px dashed rgba(255,255,255,.18); padding:10px;}
+    .preview canvas{max-width:100%; height:auto; display:block; margin:0 auto; border-radius:12px;}
+    .chips{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px;}
+    .chip{padding:8px 10px; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid var(--line);
+      font-size:12px; color:var(--muted);}
+    .chip b{color:var(--text)}
+    .badge{display:inline-block; padding:2px 8px; border-radius:999px; background:rgba(255,255,255,.08);
+      border:1px solid var(--line); font-size:11px; color:var(--muted);}
+    .safeCard{padding:14px; background:linear-gradient(180deg, rgba(47,227,155,.10), rgba(255,255,255,.03));}
+    input[type="range"]{width:100%}
+    .twoCols{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+    @media(max-width:720px){ .twoCols{grid-template-columns:1fr;} }
   </style>
-
-  <!-- OCR engine (Tesseract.js). CDN (online). Manual mode always works. -->
-  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 </head>
 
 <body>
   <div class="wrap">
-    <div class="hero">
-      <h1>Bùi Hào — SOI ĐB (OCR Gate • Pha Safe • HIT@3>=2)</h1>
-      <p class="sub">
-        Luồng: Upload nhiều ảnh / Camera → (tuỳ chọn) cắt an toàn → OCR → Gate theo pattern (ĐB/G7/G6) → Save “1 ngày/1 dòng” → CHECK PHA (HardLock) → mới mở CHỐT.
-        <br>* Tool hỗ trợ phân tích, không đảm bảo kết quả.
-      </p>
+    <div class="title">Bùi Hào — Lotto ULTRA MASTER (V2 • 2-ZONE OCR • PHA SAFE HardLock)</div>
+    <p class="sub">
+      Luồng cao nhất: <b>StartDate Hard-Assign</b> → Preprocess → <b>OCR 2-ZONE</b> (DB riêng / BOTTOM riêng) →
+      Gate DB/G7/G6 → HardLock chuỗi ngày → mở PHA SAFE. Thiếu/không chắc → <b>STOP</b>.
+    </p>
 
-      <div class="row">
-        <span class="chip"><span class="dot ok"></span> OpenCV: (lite) — cắt an toàn</span>
-        <span class="chip"><span class="dot ok"></span> Tesseract OCR</span>
-        <span class="chip"><span class="dot warn"></span> Batch nhiều ảnh</span>
-        <span class="chip"><span class="dot warn"></span> DB: nhãn “ĐB/DB” + 5 số</span>
-        <span class="chip"><span class="dot warn"></span> G7: 4 số 2 chữ số</span>
-        <span class="chip"><span class="dot warn"></span> G6: 3 số 3 chữ số</span>
-        <span class="chip"><span class="dot ok"></span> Auto “1 ngày / 1 dòng”</span>
-        <span class="chip"><span class="dot ok"></span> Fallback Manual</span>
+    <div class="card">
+      <div class="row" style="justify-content:space-between; gap:12px">
+        <div class="row">
+          <span class="pill"><span id="stPre" class="dot"></span> Preprocess</span>
+          <span class="pill"><span id="stOcr" class="dot"></span> OCR (DB+BOTTOM)</span>
+          <span class="pill"><span id="stGate" class="dot"></span> Gate</span>
+          <span class="pill"><span id="stPha" class="dot"></span> PHA SAFE</span>
+          <span class="badge" id="hardLockBadge">HardLock=ON</span>
+          <span class="badge">V2=2-ZONE</span>
+        </div>
+        <div class="row">
+          <button class="btn secondary" id="btnPaste">Dán mẫu</button>
+          <button class="btn danger" id="btnReset">RESET SẠCH</button>
+        </div>
       </div>
 
-      <div class="btnbar">
-        <button id="btnUpload">📸 Upload nhiều ảnh</button>
-        <button class="secondary" id="btnCamera">📷 Camera</button>
-        <button class="secondary" id="btnPasteSample">Dán mẫu</button>
-        <button class="danger" id="btnReset">RESET SẠCH</button>
-      </div>
+      <div class="hr"></div>
 
-      <input id="fileInput" type="file" accept="image/*" multiple style="display:none" />
-      <input id="camInput" type="file" accept="image/*" capture="environment" style="display:none" />
-
-      <div class="pillbar" style="margin-top:12px">
-        <span class="pill"><span class="dot ok"></span><strong>Gate:</strong><span id="stGate">waiting</span></span>
-        <span class="pill"><span class="dot ok"></span><strong>OCR:</strong><span id="stOCR">idle</span></span>
-        <span class="pill"><span class="dot warn"></span><strong>Batch:</strong><span id="stBatch">0</span></span>
-        <span class="pill"><span class="dot warn"></span><strong>Save:</strong><span id="stSave">empty</span></span>
-      </div>
-    </div>
-
-    <div class="grid">
-      <!-- LEFT: OCR Gate -->
-      <div class="card">
-        <h2>Ảnh → OCR → Gate</h2>
-        <p class="help">
-          Mẹo: crop sát phần bảng (từ “ĐB” tới “7”). Tránh dính footer tab (Miền Bắc/Trung/Nam) và header quảng cáo.
-          Nếu ảnh dính nhiều thứ → Gate dễ fail → dùng Manual.
-        </p>
-
-        <div class="split">
-          <div>
-            <label>Chế độ cắt an toàn (khuyến nghị)</label>
-            <div class="row">
-              <span class="chip"><span class="dot ok"></span>Auto-trim TOP/BOTTOM</span>
-            </div>
-            <div class="field">
-              <label>Trim TOP (%)</label>
-              <input id="trimTop" type="text" value="12" class="mono" />
-            </div>
-            <div class="field">
-              <label>Trim BOTTOM (%)</label>
-              <input id="trimBottom" type="text" value="12" class="mono" />
-            </div>
-            <button class="secondary" id="btnRebuildThumbs">Áp trim + Rebuild preview</button>
+      <div class="grid">
+        <!-- Left -->
+        <div>
+          <div class="row" style="gap:10px">
+            <input id="file" type="file" accept="image/*" multiple style="display:none" />
+            <button class="btn" id="btnUpload">📸 Upload nhiều ảnh</button>
+            <button class="btn secondary" id="btnCamera">🎥 Camera</button>
+            <button class="btn secondary" id="btnStopCam" disabled>⛔ Tắt camera</button>
+            <button class="btn" id="btnRun" style="margin-left:auto">⚡ CHẠY FULL</button>
           </div>
 
-          <div>
-            <label>Manual (dán text OCR / nhập tay)</label>
-            <textarea id="manualText" class="mono" placeholder="Dán text OCR hoặc gõ tay. Ví dụ:
-ĐB 86408
-G7 50 41 65 99
-G6 609 108 352"></textarea>
-            <div class="btnbar" style="margin-top:8px">
-              <button class="secondary" id="btnParseManual">Gate Manual</button>
-              <button id="btnSaveManual">Save 1 ngày / 1 dòng</button>
+          <div class="kpi">
+            <div class="box">
+              <div class="cap">Batch</div>
+              <div class="big"><span id="kOk">0</span> <span class="cap">OK</span> <span style="opacity:.35">|</span> <span id="kFail">0</span> <span class="cap">FAIL</span></div>
+              <div class="cap">Ảnh đã nạp: <span id="kCount">0</span></div>
             </div>
-
-            <div class="field">
-              <label>Ngày (nếu để trống: auto = hôm nay)</label>
-              <input id="manualDate" type="date" />
+            <div class="box">
+              <div class="cap">Save</div>
+              <div class="big"><span id="kDays">0</span> <span class="cap">ngày</span></div>
+              <div class="cap">Lưu localStorage (offline OK)</div>
             </div>
           </div>
+
+          <div class="hr"></div>
+
+          <label>StartDate (bắt buộc — YYYY-MM-DD)</label>
+          <input class="in" id="startDate" placeholder="VD: 2026-02-28" />
+          <div class="hint" style="margin-top:6px">
+            Cứng nhất: <b>ngày = StartDate + index ảnh</b>. Header OCR chỉ để xác nhận (không quyết định).
+          </div>
+
+          <label>Manual Fix (DB|G7|G6) — dán khi OCR lệch</label>
+          <input class="in" id="manualFix" placeholder="VD: DB=83 | G7=57 42 39 13 | G6=247 554 108" />
+          <div class="hint" style="margin-top:6px">Chỉ dùng khi Gate fail. Không “đoán dữ liệu”.</div>
+
+          <div class="hr"></div>
+
+          <div class="row">
+            <button class="btn secondary small" id="btnRescue">Rescue presets: ON</button>
+            <span class="chip"><b>Gate-3</b>&nbsp;lệch ngày = STOP</span>
+            <span class="chip"><b>Ưu tiên</b>&nbsp;G7 theo dòng “7 …”</span>
+          </div>
+
+          <div class="hr"></div>
+
+          <div class="box">
+            <div style="font-weight:900; margin-bottom:6px;">V2 • Cấu hình 2 vùng OCR (an toàn)</div>
+            <div class="hint">Tách vùng giúp G7/G6 không bị “dính” số giữa bảng. Nếu ảnh bị lệch khung → bật Rescue.</div>
+
+            <div class="twoCols" style="margin-top:10px">
+              <div class="box" style="margin:0; padding:10px;">
+                <div class="cap"><b>Vùng DB (OCR_DB)</b> — lấy từ phần trên</div>
+                <div class="cap">Top: <span id="dbTopV">18</span>%</div>
+                <input id="dbTop" type="range" min="0" max="40" step="1" value="18">
+                <div class="cap">Height: <span id="dbHV">22</span>%</div>
+                <input id="dbH" type="range" min="10" max="40" step="1" value="22">
+              </div>
+
+              <div class="box" style="margin:0; padding:10px;">
+                <div class="cap"><b>Vùng BOTTOM (OCR_BOTTOM)</b> — lấy cuối bảng</div>
+                <div class="cap">From: <span id="botFromV">62</span>% (từ trên xuống)</div>
+                <input id="botFrom" type="range" min="40" max="85" step="1" value="62">
+                <div class="cap">Height: <span id="botHV">36</span>%</div>
+                <input id="botH" type="range" min="20" max="60" step="1" value="36">
+              </div>
+            </div>
+
+            <div class="twoCols" style="margin-top:10px">
+              <div class="box" style="margin:0; padding:10px;">
+                <div class="cap"><b>Preprocess chung</b></div>
+                <div class="cap">Trim top: <span id="trimTopV">14</span>%</div>
+                <input id="trimTop" type="range" min="0" max="30" step="1" value="14">
+                <div class="cap">Trim bot: <span id="trimBotV">12</span>%</div>
+                <input id="trimBot" type="range" min="0" max="30" step="1" value="12">
+              </div>
+              <div class="box" style="margin:0; padding:10px;">
+                <div class="cap"><b>Scale</b>: <span id="scaleV">2.0</span>x</div>
+                <input id="scale" type="range" min="1.2" max="3.0" step="0.1" value="2.0">
+                <div class="hint" style="margin-top:6px;">Khuyến nghị: 1.8–2.4x (đủ nét, không nặng máy).</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hint" style="margin-top:10px">
+            Mẹo ảnh: crop sát phần bảng (từ “ĐB/DB” tới “7”). Tránh dính footer tab & header quảng cáo.
+          </div>
+        </div>
+
+        <!-- Right -->
+        <div>
+          <div class="preview">
+            <div class="chips">
+              <span class="chip">Preview tổng (auto-trim)</span>
+              <span class="chip">DB-zone</span>
+              <span class="chip">BOTTOM-zone</span>
+            </div>
+            <canvas id="can" width="600" height="800"></canvas>
+          </div>
+
+          <label>OCR Raw — DB zone</label>
+          <div class="boxmono mono" id="rawDB">—</div>
+
+          <label>OCR Raw — BOTTOM zone</label>
+          <div class="boxmono mono" id="rawBottom">—</div>
+
+          <label>Gate Output</label>
+          <div class="boxmono mono" id="gateOut">GATE: waiting</div>
+        </div>
+      </div>
+
+      <div class="hr"></div>
+
+      <div class="card safeCard">
+        <div class="row" style="justify-content:space-between">
+          <div>
+            <div style="font-weight:900; font-size:14px;">PHA SAFE • HardLock</div>
+            <div class="hint">Chỉ mở pha khi ≥ 3 ngày sạch. Nếu Gate fail / thiếu trường → STOP.</div>
+          </div>
+          <span class="badge" id="phaBadge">Confidence≈0%</span>
         </div>
 
         <div class="hr"></div>
 
-        <h2>Preview batch</h2>
-        <div class="preview" id="preview"></div>
+        <div class="boxmono mono" id="chainBox">(chưa có dữ liệu)</div>
 
         <div class="hr"></div>
 
-        <div class="btnbar">
-          <button id="btnRunOCR" disabled>Chạy OCR + Gate (Batch)</button>
-          <button class="secondary" id="btnCheckPha" disabled>CHECK PHA (HardLock)</button>
-          <button id="btnChot" disabled>CHỐT (6 dòng + 1 anti)</button>
-        </div>
-
-        <p class="note" id="noteHint"></p>
-      </div>
-
-      <!-- RIGHT: Data + Pha output -->
-      <div class="card">
-        <h2>Dữ liệu đã lưu (7–14 ngày)</h2>
-        <p class="help">
-          App dùng <b>lõi = (đuôi ĐB + lõi G7)</b>. HardLock pha = cứng nhất: thiếu điều kiện là STOP (không cho chốt).
-        </p>
-
-        <table class="tbl" id="tblData">
-          <thead>
-            <tr>
-              <th>Ngày</th>
-              <th>ĐB</th>
-              <th>G7</th>
-              <th>G6</th>
-              <th class="right">Gate</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
+        <div class="mono" id="phaBox">PHA: STOP
+Thiếu dữ liệu (cần ≥ 3 ngày sạch).</div>
 
         <div class="hr"></div>
 
-        <h2>Kết luận</h2>
-        <div class="bigmode">
-          <div>
-            <div class="tag" id="tagPha">PHA: —</div>
-            <div class="m" id="modeText">MODE: STOP</div>
-            <div class="note" id="hardlockWhy">Chưa có dữ liệu.</div>
-          </div>
-          <div class="pct" id="phaPct">0%</div>
+        <div class="hint">
+          Checklist chống lệch ngày / lệch pha:
+          <ul>
+            <li>Ngày tăng đúng thứ tự (Hard-Assign theo StartDate + index).</li>
+            <li>Mỗi ngày: phải có <b>DB2 + G7(4) + G6(3)</b>.</li>
+            <li>Gate fail → Manual Fix hoặc chỉnh ảnh / bật Rescue.</li>
+            <li>Không đủ sạch → <b>STOP</b>.</li>
+          </ul>
         </div>
-
-        <div class="kq" style="margin-top:10px">
-          <div class="line"><span>1) Pha ngày</span><span class="mono" id="out1">—</span></div>
-          <div class="line"><span>2) Hướng chính</span><span class="mono" id="out2">—</span></div>
-          <div class="line"><span>3) Vai trò G6–G7</span><span class="mono" id="out3">—</span></div>
-          <div class="line"><span>4) Quyết định</span><span class="mono" id="out4">—</span></div>
-          <div class="line"><span>5) Chốt</span><span class="mono" id="out5">—</span></div>
-          <div class="line"><span>6) % tin cậy</span><span class="mono" id="out6">—</span></div>
-          <div class="line"><span>Anti-bẫy (bắt buộc)</span><span class="mono" id="outAnti">—</span></div>
-        </div>
-
-        <div class="btnbar" style="margin-top:10px">
-          <button class="secondary" id="btnCopy">Copy 6 dòng</button>
-          <button class="secondary" id="btnExport">Export JSON</button>
-        </div>
-
-        <p class="note">
-          Tip an toàn pha: nếu HardLock fail → đừng ép trục. Nếu “Bung biên” tăng → coi là cảnh báo.
-        </p>
       </div>
-    </div>
-  </div>
 
-  <div class="footer">
-    <div class="wrap2">
-      <div class="miniinfo">Bùi Hào • Pha Safe Gate • Lõi=(đuôi ĐB + lõi G7) • Offline data (localStorage)</div>
-      <div class="miniinfo">Nếu muốn PWA offline cache 100%: tạo thêm <span class="mono">sw.js</span> riêng (mình gửi sau).</div>
+      <div class="hint" style="margin-top:10px">
+        Tip PWA: Chrome Android “⋮” → “Add to Home screen”.
+      </div>
     </div>
   </div>
 
 <script>
-/* =========================
-   STORAGE + STATE
-========================= */
-const LS_KEY = "bh_ultra_db_pwa_v1";
-const state = {
-  images: [],   // {id, file, url, trimmedUrl, ocrText, parsed, gateOk}
-  rows: [],     // {date, db5, db2, g7:[..], g6:[..], ok, note}
-  lastPha: null // computed
-};
+/* ========== PWA register ========== */
+(async ()=>{
+  if('serviceWorker' in navigator){
+    try{ await navigator.serviceWorker.register('./sw.js'); }catch(e){}
+  }
+})();
 
-function loadState(){
-  try{
-    const raw = localStorage.getItem(LS_KEY);
-    if(!raw) return;
-    const obj = JSON.parse(raw);
-    state.rows = Array.isArray(obj.rows) ? obj.rows : [];
-  }catch(e){}
-}
-function saveState(){
-  localStorage.setItem(LS_KEY, JSON.stringify({rows: state.rows}));
-  updateSavePill();
-}
-
-/* =========================
-   UI HELPERS
-========================= */
+/* ========== Helpers ========== */
 const $ = (id)=>document.getElementById(id);
-function setPill(id, text){ $(id).textContent = text; }
+const sleep = (ms)=>new Promise(r=>setTimeout(r,ms));
+function setDot(el, state){ el.classList.remove('ok','bad'); if(state==='ok') el.classList.add('ok'); else if(state==='bad') el.classList.add('bad'); }
+function todayISO(d=new Date()){ const z=(n)=>String(n).padStart(2,'0'); return `${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())}`; }
+function parseISODate(s){
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(s)) return null;
+  const [y,m,d]=s.split('-').map(Number);
+  const dt=new Date(y,m-1,d);
+  if(dt.getFullYear()!==y||dt.getMonth()!==m-1||dt.getDate()!==d) return null;
+  return dt;
+}
+function addDaysISO(iso, add){
+  const dt=parseISODate(iso); if(!dt) return null;
+  dt.setDate(dt.getDate()+add); return todayISO(dt);
+}
+function clamp(n,a,b){ return Math.max(a, Math.min(b,n)); }
+function normalizeOCR(text){
+  return (text||"")
+    .replace(/\u00A0/g,' ')
+    .replace(/[|]/g,' ')
+    .replace(/[^\S\r\n]+/g,' ')
+    .replace(/ĐB/g,'DB')
+    .replace(/\bD\s*B\b/g,'DB')
+    .replace(/O/g,'0')
+    .replace(/I/g,'1')
+    .replace(/l/g,'1')
+    .replace(/S/g,'5')
+    .replace(/B/g,'8');
+}
 
-function updateStatus(){
-  setPill("stBatch", String(state.images.length));
-  setPill("stGate", state.images.length ? "ready" : "waiting");
-  $("btnRunOCR").disabled = state.images.length === 0;
-  $("btnCheckPha").disabled = state.rows.length < 3;
-  $("btnChot").disabled = !state.lastPha || state.lastPha.mode === "STOP";
-}
-function updateSavePill(){
-  setPill("stSave", state.rows.length ? `${state.rows.length} ngày` : "empty");
-}
-function setNote(msg){
-  $("noteHint").textContent = msg || "";
-}
+/* ========== Storage ========== */
+const LS_KEY = "BH_ULTRA_OCR_GATE_PWA_V2_DAYS";
+const LS_CFG = "BH_ULTRA_OCR_GATE_PWA_V2_CFG";
 
-/* =========================
-   IMAGE PREVIEW + SAFE TRIM
-========================= */
-function fileToUrl(file){
+let cfg = {
+  trimTop: 14, trimBot: 12, scale: 2.0,
+  // 2-zone defaults
+  dbTop: 18, dbH: 22,
+  botFrom: 62, botH: 36,
+  ocrLang: "eng",
+  rescueLevels: [
+    {trimTop:14, trimBot:12, scale:2.0},
+    {trimTop:16, trimBot:12, scale:2.2},
+    {trimTop:12, trimBot:14, scale:2.2},
+    {trimTop:18, trimBot:10, scale:2.4}
+  ]
+};
+function loadCfg(){ try{ const raw=localStorage.getItem(LS_CFG); if(raw) cfg={...cfg, ...JSON.parse(raw)}; }catch(e){} }
+function saveCfg(){ localStorage.setItem(LS_CFG, JSON.stringify(cfg)); }
+function loadDays(){ try{ const raw=localStorage.getItem(LS_KEY); const a=raw?JSON.parse(raw):[]; return Array.isArray(a)?a:[]; }catch(e){ return []; } }
+function saveDays(arr){ localStorage.setItem(LS_KEY, JSON.stringify(arr)); $("kDays").textContent = String(arr.length); }
+
+/* ========== Canvas preprocess (full preview) ========== */
+const can = $("can");
+const ctx = can.getContext("2d");
+function drawBlank(){
+  ctx.clearRect(0,0,can.width,can.height);
+  ctx.fillStyle="rgba(255,255,255,.04)"; ctx.fillRect(0,0,can.width,can.height);
+  ctx.fillStyle="rgba(232,238,252,.65)"; ctx.font="16px system-ui"; ctx.textAlign="center";
+  ctx.fillText("Preview sẽ hiện ở đây", can.width/2, can.height/2);
+}
+function blobToImage(blob){
+  return new Promise((res,rej)=>{
+    const url=URL.createObjectURL(blob);
+    const img=new Image();
+    img.onload=()=>{ URL.revokeObjectURL(url); res(img); };
+    img.onerror=(e)=>{ URL.revokeObjectURL(url); rej(e); };
+    img.src=url;
+  });
+}
+async function drawPreprocessFromBlob(blob){
+  const img = await blobToImage(blob);
+  const w = img.naturalWidth, h = img.naturalHeight;
+  const top = Math.floor(h * (cfg.trimTop/100));
+  const bot = Math.floor(h * (cfg.trimBot/100));
+  const cropH = clamp(h - top - bot, 50, h);
+  const outW = Math.floor(w * cfg.scale);
+  const outH = Math.floor(cropH * cfg.scale);
+
+  can.width = clamp(outW, 360, 1500);
+  can.height = clamp(outH, 360, 1900);
+
+  ctx.imageSmoothingEnabled=true; ctx.imageSmoothingQuality="high";
+  ctx.drawImage(img, 0, top, w, cropH, 0, 0, can.width, can.height);
+
+  // grayscale + contrast
+  const imgData = ctx.getImageData(0,0,can.width,can.height);
+  const d = imgData.data;
+  const contrast = 1.25, intercept = 128*(1-contrast);
+  for(let i=0;i<d.length;i+=4){
+    const r=d[i], g=d[i+1], b=d[i+2];
+    let y = (0.299*r+0.587*g+0.114*b);
+    y = y*contrast + intercept; y = clamp(y,0,255);
+    d[i]=d[i+1]=d[i+2]=y;
+  }
+  ctx.putImageData(imgData,0,0);
+
+  drawZoneOverlay();
+  syncUI();
+}
+function drawZoneOverlay(){
+  const W=can.width, H=can.height;
+  const dbY = Math.floor(H * (cfg.dbTop/100));
+  const dbH = Math.floor(H * (cfg.dbH/100));
+  const botY = Math.floor(H * (cfg.botFrom/100));
+  const botH = Math.floor(H * (cfg.botH/100));
+
+  ctx.save();
+  ctx.lineWidth = 4;
+
+  ctx.strokeStyle = "rgba(47,227,155,.85)";
+  ctx.fillStyle   = "rgba(47,227,155,.10)";
+  ctx.fillRect(8, dbY, W-16, dbH);
+  ctx.strokeRect(8, dbY, W-16, dbH);
+  ctx.fillStyle="rgba(47,227,155,.95)";
+  ctx.font="bold 18px system-ui";
+  ctx.fillText("DB zone", 18, dbY+26);
+
+  ctx.strokeStyle = "rgba(247,201,72,.90)";
+  ctx.fillStyle   = "rgba(247,201,72,.10)";
+  ctx.fillRect(8, botY, W-16, botH);
+  ctx.strokeRect(8, botY, W-16, botH);
+  ctx.fillStyle="rgba(247,201,72,.95)";
+  ctx.fillText("BOTTOM zone (G6/G7)", 18, botY+26);
+
+  ctx.restore();
+}
+function cropCanvasToBlob(y, h, type="image/png", quality=0.92){
   return new Promise((res)=>{
-    const url = URL.createObjectURL(file);
-    res(url);
+    const tmp=document.createElement("canvas");
+    tmp.width=can.width;
+    tmp.height=h;
+    const tctx=tmp.getContext("2d");
+    tctx.drawImage(can, 0, y, can.width, h, 0, 0, tmp.width, tmp.height);
+
+    const imgData=tctx.getImageData(0,0,tmp.width,tmp.height);
+    const d=imgData.data;
+    const contrast=1.35, intercept=128*(1-contrast);
+    for(let i=0;i<d.length;i+=4){
+      let yv=d[i];
+      yv=yv*contrast+intercept; yv=clamp(yv,0,255);
+      d[i]=d[i+1]=d[i+2]=yv;
+    }
+    tctx.putImageData(imgData,0,0);
+
+    tmp.toBlob(res, type, quality);
   });
 }
 
-// Safe trim: crop top/bottom percentage via canvas.
-async function trimImage(url, topPct, bottomPct){
-  const img = new Image();
-  img.crossOrigin = "anonymous";
-  img.src = url;
-  await img.decode();
-  const c = document.createElement("canvas");
-  const w = img.naturalWidth, h = img.naturalHeight;
-  const top = Math.round(h * (topPct/100));
-  const bottom = Math.round(h * (bottomPct/100));
-  const y = Math.max(0, top);
-  const hh = Math.max(1, h - top - bottom);
-  c.width = w; c.height = hh;
-  const ctx = c.getContext("2d");
-  ctx.drawImage(img, 0, y, w, hh, 0, 0, w, hh);
-  return c.toDataURL("image/jpeg", 0.92);
+/* ========== OCR ========== */
+async function ocrBlob(blob){
+  const { data } = await Tesseract.recognize(blob, cfg.ocrLang, { logger: ()=>{} });
+  const raw = (data && data.text) ? data.text : "";
+  const norm = normalizeOCR(raw);
+  return { raw, norm };
 }
 
-function renderPreview(){
-  const pv = $("preview");
-  pv.innerHTML = "";
-  for(const it of state.images){
-    const d = document.createElement("div");
-    d.className = "thumb";
-    const img = document.createElement("img");
-    img.src = it.trimmedUrl || it.url;
-    const badge = document.createElement("div");
-    badge.className = "badge";
-    const mini = document.createElement("span");
-    mini.className = "mini " + (it.gateOk ? "ok" : it.gateOk === false ? "bad" : "warn");
-    const txt = document.createElement("span");
-    txt.textContent = it.gateOk ? "Gate OK" : it.gateOk === false ? "Gate FAIL" : "Pending";
-    badge.appendChild(mini); badge.appendChild(txt);
-    d.appendChild(img); d.appendChild(badge);
-    pv.appendChild(d);
+/* ========== Gate extraction (V2) ========== */
+function extractDB2_fromDBZone(t){
+  let m = t.match(/\bDB\b[\s:]*([0-9]{5})/i);
+  if(m) return m[1].slice(-2);
+  const m2 = t.match(/\b(\d{5})\b/);
+  if(m2) return m2[1].slice(-2);
+  return null;
+}
+function extractG7_fromBottom(t){
+  let m = t.match(/(^|\n)\s*7\s+(\d{2})\s+(\d{2})\s+(\d{2})\s+(\d{2})(?=\s|$)/);
+  if(m) return [m[2],m[3],m[4],m[5]];
+  m = t.match(/(^|\n)\s*7\s*[:\-]\s*(\d{2})\s+(\d{2})\s+(\d{2})\s+(\d{2})(?=\s|$)/);
+  if(m) return [m[2],m[3],m[4],m[5]];
+  const lines = t.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
+  let cand=null;
+  for(const line of lines){
+    const nums=line.match(/\b\d{2}\b/g);
+    if(nums && nums.length===4) cand=nums;
   }
-  updateStatus();
+  return cand;
 }
-
-/* =========================
-   OCR + GATE PARSER
-   Pattern rules (as you asked):
-   - DB label “ĐB/DB” + 5 digits
-   - G7: 4 numbers (2 digits)
-   - G6: 3 numbers (3 digits) -> take last 2 digits each
-========================= */
-function normalizeText(t){
-  return (t||"")
-    .replace(/\r/g,"\n")
-    .replace(/[^\S\n]+/g," ")
-    .replace(/ĐB/gi,"DB")  // unify
-    .replace(/ÐB/gi,"DB")
-    .replace(/O/g,"0")     // OCR common confusion
-    .replace(/I/g,"1")
-    .replace(/l/g,"1")
-    .replace(/S/g,"5");
-}
-
-// Extract DB 5 digits after DB label
-function extractDB(text){
-  const m = text.match(/\bDB\b[\s:]*([0-9]{5})\b/);
-  if(m) return m[1];
-  // fallback: sometimes OCR reads "DB 86408" across lines
-  const m2 = text.match(/\bDB\b[\s:\n]*([0-9]{5})\b/);
-  return m2 ? m2[1] : null;
-}
-function extractG7(text){
-  // try labeled G7
-  let m = text.match(/\bG7\b[\s:\n]*([0-9]{2})\s+([0-9]{2})\s+([0-9]{2})\s+([0-9]{2})/);
-  if(m) return [m[1],m[2],m[3],m[4]];
-  // fallback: find any line with 4 two-digit tokens
-  const lines = text.split("\n").map(s=>s.trim()).filter(Boolean);
-  for(const ln of lines){
-    const mm = ln.match(/(?:^| )([0-9]{2})\s+([0-9]{2})\s+([0-9]{2})\s+([0-9]{2})(?: |$)/);
-    if(mm) return [mm[1],mm[2],mm[3],mm[4]];
+function extractG6_fromBottom(t){
+  let m = t.match(/(^|\n)\s*6\s+(\d{3})\s+(\d{3})\s+(\d{3})(?=\s|$)/);
+  if(m) return [m[2],m[3],m[4]];
+  const triples=[...t.matchAll(/(^|\n)\s*(\d{3})\s+(\d{3})\s+(\d{3})(?=\s|$)/g)];
+  if(triples.length){
+    const last=triples[triples.length-1];
+    return [last[2],last[3],last[4]];
   }
   return null;
 }
-function extractG6(text){
-  // labeled G6: 3-digit x3
-  let m = text.match(/\bG6\b[\s:\n]*([0-9]{3})\s+([0-9]{3})\s+([0-9]{3})/);
-  if(m) return [m[1],m[2],m[3]];
-  // fallback: find any line with three 3-digit tokens
-  const lines = text.split("\n").map(s=>s.trim()).filter(Boolean);
-  for(const ln of lines){
-    const mm = ln.match(/(?:^| )([0-9]{3})\s+([0-9]{3})\s+([0-9]{3})(?: |$)/);
-    if(mm) return [mm[1],mm[2],mm[3]];
-  }
-  return null;
-}
-
-function gateParse(raw){
-  const text = normalizeText(raw);
-  const db5 = extractDB(text);
-  const g7 = extractG7(text);
-  const g6 = extractG6(text);
-
-  const ok = !!(db5 && g7 && g6);
-  const out = {
-    ok,
-    db5,
-    db2: db5 ? db5.slice(-2) : null,
-    g7,
-    g6,
-    text
-  };
+function applyManualFix(manual){
+  const out = {};
+  const s = manual || "";
+  const mDB = s.match(/DB\s*=\s*(\d{2})/i); if(mDB) out.db2=mDB[1];
+  const mG7 = s.match(/G7\s*=\s*(\d{2})\s+(\d{2})\s+(\d{2})\s+(\d{2})/i); if(mG7) out.g7=[mG7[1],mG7[2],mG7[3],mG7[4]];
+  const mG6 = s.match(/G6\s*=\s*(\d{3})\s+(\d{3})\s+(\d{3})/i); if(mG6) out.g6=[mG6[1],mG6[2],mG6[3]];
   return out;
 }
+function gateV2(textDB, textBottom, manualFixStr){
+  const errs=[];
+  let db2=extractDB2_fromDBZone(textDB);
+  let g7=extractG7_fromBottom(textBottom);
+  let g6=extractG6_fromBottom(textBottom);
 
-/* =========================
-   LÕI + PHA SAFE ENGINE (HardLock)
-   Lõi = (đuôi ĐB + lõi G7)
-   - lõi G7 = digit xuất hiện nhiều nhất trong 4 số G7 (tính theo ĐUÔI)
-   HardLock A/B/C:
-   A Structure: có cấu trúc lặp trong 7 ngày (đầu/đuôi lặp hoặc tổng lặp đôi)
-   B Anchor: G6 neo + G7 dính lõi >=2/3 (3 ngày gần nhất)
-   C Anti-breakout: 3 ngày gần nhất không đồng thời bung biên mạnh ở G6/G7 và ĐB biên hoá
-========================= */
-function digitsOf(str){ return String(str).split("").map(x=>Number(x)); }
-function sum2(n2){
-  if(!n2 || n2.length!==2) return null;
-  return Number(n2[0])+Number(n2[1]);
-}
-function isDoubleSum(n2){
-  const s = sum2(n2);
-  if(s===null) return false;
-  const ss = String(s);
-  return ss.length===2 && ss[0]===ss[1]; // 11,22,33...
-}
-function tailDigit(n){ return Number(String(n).slice(-1)); }
-function headDigit2(n2){ return Number(String(n2)[0]); }
+  const mf=applyManualFix(manualFixStr);
+  if(!db2 && mf.db2) db2=mf.db2;
+  if(!g7 && mf.g7) g7=mf.g7;
+  if(!g6 && mf.g6) g6=mf.g6;
 
-function dominantTailDigitG7(g7){
-  // g7: ["50","41","65","99"] => count tail digits
-  const cnt = new Map();
-  for(const x of g7){
-    const d = tailDigit(x);
-    cnt.set(d, (cnt.get(d)||0)+1);
-  }
-  // pick max; tie -> smaller digit
-  let best = null, bestc=-1;
-  for(const [d,c] of cnt.entries()){
-    if(c>bestc || (c===bestc && d<best)){ best=d; bestc=c; }
-  }
-  return best; // 0..9
+  if(!db2 || !/^\d{2}$/.test(db2)) errs.push("MISS_DB2");
+  if(!g7 || g7.length!==4 || g7.some(x=>!/^\d{2}$/.test(x))) errs.push("MISS_G7");
+  if(!g6 || g6.length!==3 || g6.some(x=>!/^\d{3}$/.test(x))) errs.push("MISS_G6");
+
+  return { ok: errs.length===0, errs, db2, g7, g6 };
 }
 
-function lastNRows(n=7){
-  const rows = [...state.rows].sort((a,b)=>a.date.localeCompare(b.date));
-  return rows.slice(-n);
+/* ========== HardLock + PHA SAFE ========== */
+function hardLockChain(startDateISO, dayItems){
+  const errs=[];
+  if(!parseISODate(startDateISO)) errs.push("MISS_STARTDATE");
+  if(dayItems.length===0) errs.push("EMPTY_BATCH");
+  if(errs.length) return {ok:false, errs};
+
+  const chain = dayItems.map((x,i)=>({ date:addDaysISO(startDateISO,i), ...x }));
+  if(chain.some(x=>!x.date)) return {ok:false, errs:["BAD_DATE_ASSIGN"]};
+
+  const miss = chain.filter(x=>!(x.db2 && x.g7 && x.g6));
+  if(miss.length) return {ok:false, errs:["INCOMPLETE_DAY_FIELDS"]};
+  return {ok:true, errs:[], chain};
+}
+function phaSafe(chain){
+  if(!chain || chain.length < 3){
+    return { pha:"STOP", conf:25, note:"Thiếu dữ liệu (cần ≥ 3 ngày sạch)." };
+  }
+  const last = chain.slice(-3).map(x=>x.db2);
+  const uniq = new Set(last).size;
+  let conf = 58;
+  let note = "Chuỗi sạch. V2=2-zone giảm nhiễu. (Module pha chi tiết gắn sau)";
+  if(uniq===1){ conf=64; note="Chuỗi sạch. ĐB đang neo (đuôi lặp 3/3)."; }
+  else if(uniq===2){ conf=60; note="Chuỗi sạch. Neo nhẹ (đuôi lặp 2/3)."; }
+  return { pha:"OK", conf, note };
 }
 
-function structureLock(rows7){
-  // Condition: at least 1 "structured repetition" in last 7 days:
-  // - DB tail digit repeats >=2 times within last 3 days OR
-  // - DB head digit repeats >=2 times within last 3 days OR
-  // - double-sum appears >=1 within last 7 days
-  if(rows7.length < 3) return {ok:false, why:"Thiếu dữ liệu 3 ngày."};
-  const r3 = rows7.slice(-3);
-  const tails = r3.map(r=>tailDigit(r.db2));
-  const heads = r3.map(r=>headDigit2(r.db2));
-  const repTail = new Set(tails).size <= 2; // means at least one repeat
-  const repHead = new Set(heads).size <= 2;
-
-  const anyDoubleSum = rows7.some(r=>isDoubleSum(r.db2));
-
-  const ok = (repTail || repHead || anyDoubleSum);
-  const why = ok
-    ? "Có cấu trúc lặp (đuôi/đầu lặp hoặc tổng lặp đôi)."
-    : "Chưa thấy cấu trúc lặp rõ trong 7 ngày.";
-  return {ok, why, repTail, repHead, anyDoubleSum};
-}
-
-function anchorLock(rows3){
-  // Need >=2/3 days:
-  // - G6 neo 1 digit lõi (đuôi DB hoặc lõi G7) xuất hiện trong 3 số G6 (đuôi 2 số)
-  // - G7 dính lõi: 4 số G7 có đuôi trùng digit lõi G7 hoặc digit đuôi DB
-  if(rows3.length < 3) return {ok:false, why:"Thiếu dữ liệu 3 ngày."};
-
-  let g6Hit=0, g7Hit=0;
-  for(const r of rows3){
-    const dbTail = tailDigit(r.db2);
-    const g7Dom = dominantTailDigitG7(r.g7);
-    const core = new Set([dbTail, g7Dom]);
-
-    // G6 check: take last 2 digits each then tail digits
-    const g6_2 = r.g6.map(x=>String(x).slice(-2));
-    const g6_tails = g6_2.map(tailDigit);
-    const g6_ok = g6_tails.some(d=>core.has(d));
-    if(g6_ok) g6Hit++;
-
-    // G7 check: tails among 4 g7
-    const g7_tails = r.g7.map(tailDigit);
-    const g7_ok = g7_tails.some(d=>core.has(d));
-    if(g7_ok) g7Hit++;
-  }
-  const ok = (g6Hit>=2 && g7Hit>=2);
-  const why = ok
-    ? `Neo đạt: G6 neo ${g6Hit}/3, G7 dính lõi ${g7Hit}/3.`
-    : `Neo yếu: G6 neo ${g6Hit}/3, G7 dính lõi ${g7Hit}/3.`;
-  return {ok, why, g6Hit, g7Hit};
-}
-
-function breakoutPressure(rows3){
-  // "Bung biên mạnh" if many 0/9 tails in G7/G6 on same day
-  // and DB biên hoá (db2 head or tail in {0,9}).
-  // BreakoutLock FAIL if >=1 day in last 3 meets BOTH conditions.
-  const BIEN = new Set([0,9]);
-  let badDays = 0;
-  for(const r of rows3){
-    const dbHead = headDigit2(r.db2);
-    const dbTail = tailDigit(r.db2);
-    const dbBien = BIEN.has(dbHead) || BIEN.has(dbTail);
-
-    const g7BienCount = r.g7.map(tailDigit).filter(d=>BIEN.has(d)).length;
-    const g6BienCount = r.g6.map(x=>tailDigit(String(x).slice(-2))).filter(d=>BIEN.has(d)).length;
-
-    const bung = (g7BienCount + g6BienCount) >= 3; // strong
-    if(dbBien && bung) badDays++;
-  }
-  const ok = (badDays===0);
-  const why = ok ? "Không thấy breakout biên nguy hiểm trong 3 ngày." : `Cảnh báo breakout biên: ${badDays}/3 ngày.`;
-  return {ok, why, badDays};
-}
-
-function classifyPha(rows){
-  // HardLock requires A+B+C.
-  const rows7 = rows.slice(-7);
-  const rows3 = rows.slice(-3);
-  const A = structureLock(rows7);
-  const B = anchorLock(rows3);
-  const C = breakoutPressure(rows3);
-
-  const hardOk = A.ok && B.ok && C.ok;
-
-  // Confidence score:
-  // Structure 0/30, Anchor 0/40, Breakout 0/30 (penalty)
-  let score = 0;
-  score += A.ok ? 30 : 10;
-  score += B.ok ? 40 : Math.max(0, (B.g6Hit||0)*8 + (B.g7Hit||0)*6); // partial
-  score += C.ok ? 30 : 10;
-  score = Math.max(0, Math.min(100, score));
-
-  // Determine M1/M2/M3 using safest logic
-  let pha = "M1";
-  let mode = "STOP";
-
-  if(!hardOk){
-    pha = "M1";
-    mode = "STOP";
-  }else{
-    // check "liền nhịp" core across last 2 days using (dbTail + g7Dom)
-    if(rows.length >= 2){
-      const r1 = rows[rows.length-2];
-      const r2 = rows[rows.length-1];
-      const c1 = `${tailDigit(r1.db2)}-${dominantTailDigitG7(r1.g7)}`;
-      const c2 = `${tailDigit(r2.db2)}-${dominantTailDigitG7(r2.g7)}`;
-      const lien = (c1 === c2);
-      if(lien && score>=80){
-        pha = "M3";
-        mode = "SIẾT";
-      }else{
-        pha = "M2";
-        mode = "LIGHT";
-      }
-    }else{
-      pha = "M2";
-      mode = "LIGHT";
-    }
-  }
-
-  // Build why
-  const why = [
-    `A(Structure): ${A.ok ? "OK" : "FAIL"} — ${A.why}`,
-    `B(Anchor): ${B.ok ? "OK" : "FAIL"} — ${B.why}`,
-    `C(Breakout): ${C.ok ? "OK" : "FAIL"} — ${C.why}`
-  ].join(" | ");
-
-  return { pha, mode, score, hardOk, why, A, B, C };
-}
-
-/* =========================
-   CHỐT OUTPUT (6 lines + 1 anti)
-   - If STOP: no chốt
-   - LIGHT: 2 số + anti
-   - SIẾT: 1 con (1 cặp) + anti
-   Chốt dựa trên lõi=(đuôi ĐB + lõi G7)
-========================= */
-function pickAnti(rows){
-  // Anti priority:
-  // 1) If biên pressure rising -> choose one from 09/90/00/99 not seen last 3 days
-  // 2) Else anti = đảo của db2 (reverse)
-  const last3 = rows.slice(-3);
-  const seen = new Set(last3.map(r=>r.db2).concat(last3.flatMap(r=>r.g7)));
-  const bienSet = ["09","90","00","99"];
-  const C = breakoutPressure(last3);
-  if(!C.ok){
-    for(const x of bienSet){
-      if(!seen.has(x)) return x;
-    }
-    return "09";
-  }
-  const last = rows[rows.length-1];
-  const db2 = last.db2;
-  const rev = db2[1]+db2[0];
-  return rev;
-}
-
-function pickChot(rows, pha){
-  const last = rows[rows.length-1];
-  const dbTail = tailDigit(last.db2);        // digit
-  const g7Dom = dominantTailDigitG7(last.g7);// digit
-  const a = `${dbTail}${g7Dom}`.padStart(2,"0");
-  const b = `${g7Dom}${dbTail}`.padStart(2,"0");
-
-  // choose one based on parity trend from last 3 DB:
-  const last3 = rows.slice(-3).map(r=>Number(r.db2)%2); // 0 even 1 odd
-  const oddCount = last3.reduce((s,x)=>s+x,0);
-  const preferOdd = oddCount<=1; // if mostly even recently, prefer odd to balance, else even
-  const cand = [a,b];
-  let pick = cand[0];
-  for(const c of cand){
-    const isOdd = (Number(c)%2===1);
-    if(preferOdd && isOdd) { pick = c; break; }
-    if(!preferOdd && !isOdd){ pick = c; break; }
-  }
-
-  // For SIẾT: return 1 cặp. For LIGHT: return 2 số (pair)
-  if(pha.mode === "SIẾT"){
-    return {chot: pick, bundle:[pick]};
-  }
-  // LIGHT
-  const other = (pick===a)?b:a;
-  return {chot: `${pick} ${other}`, bundle:[pick, other]};
-}
-
-function computeHuong(rows, pha){
-  // Minimal: core digits + warning on biên
-  const last = rows[rows.length-1];
-  const dbTail = tailDigit(last.db2);
-  const g7Dom = dominantTailDigitG7(last.g7);
-  const core = `${dbTail}-${g7Dom}`;
-  const C = breakoutPressure(rows.slice(-3));
-  const huong = C.ok ? `Lõi bám ${core} (đuôi ĐB + lõi G7)` : `Cảnh báo biên; ưu tiên lõi ${core} nhưng khóa anti`;
-  return huong;
-}
-
-function build6Lines(){
-  if(state.rows.length < 3){
-    return null;
-  }
-  const rows = [...state.rows].sort((a,b)=>a.date.localeCompare(b.date));
-  const pha = classifyPha(rows);
-  state.lastPha = pha;
-
-  const anti = pickAnti(rows);
-  const ch = pickChot(rows, pha);
-  const huong = computeHuong(rows, pha);
-
-  // Vai trò G6–G7 short
-  const last = rows[rows.length-1];
-  const dbTail = tailDigit(last.db2);
-  const g7Dom = dominantTailDigitG7(last.g7);
-  const role = `G7 dính lõi=${g7Dom} | G6 neo theo lõi=${dbTail}/${g7Dom}`;
-
-  // Quyết định
-  let decision = "DỪNG";
-  if(pha.mode==="LIGHT") decision = "CHƠI NHẸ (2 số)";
-  if(pha.mode==="SIẾT") decision = "CHƠI (được siết 1 con)";
-
-  // % tin cậy
-  const pct = `${pha.score}%`;
-
-  // Output mapping (exact format feel)
-  $("out1").textContent = `${pha.pha} • ${pha.mode}`;
-  $("out2").textContent = huong;
-  $("out3").textContent = role;
-  $("out4").textContent = decision;
-  $("out5").textContent = (pha.mode==="STOP") ? "—" : ch.chot;
-  $("out6").textContent = pct;
-  $("outAnti").textContent = anti;
-
-  // Right panel header
-  $("tagPha").textContent = `PHA: ${pha.pha}`;
-  $("modeText").textContent = `MODE: ${pha.mode}`;
-  $("phaPct").textContent = pct;
-  $("hardlockWhy").textContent = pha.why;
-
-  // Enable/disable chốt
-  $("btnChot").disabled = (pha.mode==="STOP");
-
-  return {pha, anti, ch};
-}
-
-/* =========================
-   TABLE RENDER
-========================= */
-function renderTable(){
-  const tb = $("tblData").querySelector("tbody");
-  tb.innerHTML = "";
-  const rows = [...state.rows].sort((a,b)=>a.date.localeCompare(b.date));
-  for(const r of rows){
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td class="mono">${r.date}</td>
-      <td class="mono">${r.db5 || ""} <span class="tag">(${r.db2||""})</span></td>
-      <td class="mono">${(r.g7||[]).join(" ")}</td>
-      <td class="mono">${(r.g6||[]).join(" ")}</td>
-      <td class="right">${r.ok ? "✅" : "❌"}</td>
-    `;
-    tb.appendChild(tr);
-  }
-  updateSavePill();
-  updateStatus();
-}
-
-/* =========================
-   SAVE 1 NGÀY / 1 DÒNG
-========================= */
-function todayISO(){
-  const d = new Date();
-  const yyyy = d.getFullYear();
-  const mm = String(d.getMonth()+1).padStart(2,"0");
-  const dd = String(d.getDate()).padStart(2,"0");
-  return `${yyyy}-${mm}-${dd}`;
-}
-function upsertRow(row){
-  // unique by date
-  const idx = state.rows.findIndex(x=>x.date===row.date);
-  if(idx>=0) state.rows[idx] = row;
-  else state.rows.push(row);
-  // keep <= 20 days
-  state.rows = state.rows.sort((a,b)=>a.date.localeCompare(b.date)).slice(-20);
-  saveState();
-  renderTable();
-}
-
-/* =========================
-   EVENTS
-========================= */
-$("btnUpload").addEventListener("click", ()=> $("fileInput").click());
-$("btnCamera").addEventListener("click", ()=> $("camInput").click());
-
-$("fileInput").addEventListener("change", async (e)=>{
-  const files = [...e.target.files||[]];
-  await addFiles(files);
-  e.target.value = "";
-});
-$("camInput").addEventListener("change", async (e)=>{
-  const files = [...e.target.files||[]];
-  await addFiles(files);
-  e.target.value = "";
-});
-
-async function addFiles(files){
-  if(!files.length) return;
-  setPill("stOCR","idle");
-  setNote(`Đã nhận ${files.length} ảnh. Bấm “Chạy OCR + Gate (Batch)”.`);
-  const topPct = Number($("trimTop").value||12);
-  const bottomPct = Number($("trimBottom").value||12);
-
-  for(const f of files){
-    const url = await fileToUrl(f);
-    const trimmedUrl = await trimImage(url, topPct, bottomPct);
-    state.images.push({
-      id: crypto.randomUUID(),
-      file: f,
-      url,
-      trimmedUrl,
-      ocrText: "",
-      parsed: null,
-      gateOk: null
-    });
-  }
-  renderPreview();
-}
-
-$("btnRebuildThumbs").addEventListener("click", async ()=>{
-  const topPct = Number($("trimTop").value||12);
-  const bottomPct = Number($("trimBottom").value||12);
-  for(const it of state.images){
-    it.trimmedUrl = await trimImage(it.url, topPct, bottomPct);
-    it.gateOk = null;
-    it.parsed = null;
-    it.ocrText = "";
-  }
-  setNote("Đã áp trim. Bấm OCR để gate lại.");
-  renderPreview();
-});
-
-$("btnReset").addEventListener("click", ()=>{
-  if(!confirm("RESET SẠCH: xoá batch ảnh + xoá dữ liệu đã lưu (localStorage). OK?")) return;
-  state.images.forEach(it=>{ try{URL.revokeObjectURL(it.url);}catch(e){} });
-  state.images = [];
-  state.rows = [];
-  state.lastPha = null;
-  localStorage.removeItem(LS_KEY);
-  $("preview").innerHTML = "";
-  $("manualText").value = "";
-  renderTable();
-  build6Lines();
-  setPill("stGate","waiting");
-  setPill("stOCR","idle");
-  updateStatus();
-  setNote("Đã reset sạch.");
-});
-
-$("btnPasteSample").addEventListener("click", ()=>{
-  $("manualText").value = `DB 86408
-G7 50 41 65 99
-G6 609 108 352`;
-  setNote("Đã dán mẫu. Bấm “Gate Manual” rồi “Save 1 ngày / 1 dòng”.");
-});
-
-$("btnParseManual").addEventListener("click", ()=>{
-  const parsed = gateParse($("manualText").value);
-  if(parsed.ok){
-    setPill("stGate","manual: OK");
-    setNote(`Gate OK: DB=${parsed.db5} | G7=${parsed.g7.join(" ")} | G6=${parsed.g6.join(" ")}`);
-  }else{
-    setPill("stGate","manual: FAIL");
-    setNote("Gate FAIL: cần đúng DB + 5 số, G7 4 số 2 chữ số, G6 3 số 3 chữ số.");
-  }
-  $("manualText").dataset.parsed = JSON.stringify(parsed);
-});
-
-$("btnSaveManual").addEventListener("click", ()=>{
-  let parsed = null;
-  try{ parsed = JSON.parse($("manualText").dataset.parsed||"null"); }catch(e){}
-  if(!parsed || !parsed.ok){
-    alert("Chưa Gate OK. Bấm “Gate Manual” trước.");
-    return;
-  }
-  const date = $("manualDate").value || todayISO();
-  upsertRow({
-    date,
-    db5: parsed.db5,
-    db2: parsed.db2,
-    g7: parsed.g7,
-    g6: parsed.g6,
-    ok: true,
-    note: "manual"
-  });
-  setNote(`Đã save ${date}. Bấm CHECK PHA.`);
-  updateStatus();
-});
-
-$("btnRunOCR").addEventListener("click", async ()=>{
-  if(!state.images.length) return;
-  setPill("stOCR","running");
-  setNote("Đang OCR… (tuỳ máy có thể mất chút).");
-
-  // OCR sequential to be stable on mobile
-  for(let i=0;i<state.images.length;i++){
-    const it = state.images[i];
-    const src = it.trimmedUrl || it.url;
-    try{
-      const res = await Tesseract.recognize(src, "eng", { logger: ()=>{} });
-      it.ocrText = res.data.text || "";
-      it.parsed = gateParse(it.ocrText);
-      it.gateOk = !!it.parsed.ok;
-    }catch(e){
-      it.ocrText = "";
-      it.parsed = {ok:false, text:""};
-      it.gateOk = false;
-    }
-    renderPreview();
-    setNote(`OCR ${i+1}/${state.images.length}: ${it.gateOk ? "Gate OK" : "Gate FAIL"}`);
-  }
-
-  setPill("stOCR","done");
-  setNote("OCR xong. Chọn ảnh gate OK → Save (tự).");
-  // Auto-save each OK image to consecutive days? (dangerous) => safer: save into "pending list" via prompt:
-  const okCount = state.images.filter(x=>x.gateOk).length;
-  if(okCount){
-    if(confirm(`Có ${okCount} ảnh Gate OK. Bạn muốn AUTO SAVE theo thứ tự: mỗi ảnh = 1 ngày (tự tăng ngày từ hôm nay lùi về trước)?\n(OK = tự lưu, Cancel = bạn tự Manual Save từng ngày)`)){
-      const base = new Date();
-      // newest image = today, next = yesterday...
-      const okImgs = state.images.filter(x=>x.gateOk);
-      for(let j=0;j<okImgs.length;j++){
-        const d = new Date(base);
-        d.setDate(base.getDate() - j);
-        const date = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
-        const p = okImgs[j].parsed;
-        upsertRow({date, db5:p.db5, db2:p.db2, g7:p.g7, g6:p.g6, ok:true, note:"ocr"});
-      }
-      setNote("Đã auto-save. Bấm CHECK PHA.");
-      updateStatus();
-    }
-  }else{
-    setNote("Không có ảnh Gate OK. Dùng Manual nhé.");
-  }
-});
-
-$("btnCheckPha").addEventListener("click", ()=>{
-  if(state.rows.length < 3){
-    alert("Cần tối thiểu 3 ngày dữ liệu.");
-    return;
-  }
-  build6Lines();
-  updateStatus();
-});
-
-$("btnChot").addEventListener("click", ()=>{
-  const out = build6Lines();
-  if(!out) return;
-  if(out.pha.mode==="STOP"){
-    alert("STOP: Pha chưa khóa, không chốt.");
-    return;
-  }
-  setNote("Đã dựng chốt theo PHA SAFE. Copy 6 dòng để note.");
-});
-
-$("btnCopy").addEventListener("click", async ()=>{
-  const lines = [
-    `1) ${$("out1").textContent}`,
-    `2) ${$("out2").textContent}`,
-    `3) ${$("out3").textContent}`,
-    `4) ${$("out4").textContent}`,
-    `5) ${$("out5").textContent}`,
-    `6) ${$("out6").textContent}`,
-    `Anti: ${$("outAnti").textContent}`
-  ].join("\n");
+/* ========== Camera ========== */
+let camStream=null;
+async function startCamera(){
+  if(camStream) return;
   try{
-    await navigator.clipboard.writeText(lines);
-    setNote("Đã copy 6 dòng + anti vào clipboard.");
+    camStream = await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"}, audio:false});
+    $("btnStopCam").disabled=false;
+    const ok = confirm("Camera đã bật. Nhấn OK để chụp 1 ảnh đưa vào batch.");
+    if(!ok){ stopCamera(); return; }
+    const v=document.createElement("video");
+    v.autoplay=true; v.playsInline=true; v.muted=true; v.srcObject=camStream;
+    await sleep(800);
+    can.width=900; can.height=1200;
+    ctx.drawImage(v,0,0,can.width,can.height);
+    const blob = await new Promise(res=>can.toBlob(res,"image/jpeg",0.92));
+    addBlobToBatch(blob, "camera.jpg");
+    stopCamera();
   }catch(e){
-    alert("Không copy được (trình duyệt chặn). Bạn copy thủ công ở panel Kết luận.");
+    alert("Không bật được camera: "+e.message);
+    stopCamera();
   }
-});
+}
+function stopCamera(){
+  if(camStream){ camStream.getTracks().forEach(t=>t.stop()); camStream=null; }
+  $("btnStopCam").disabled=true;
+}
 
-$("btnExport").addEventListener("click", ()=>{
-  const payload = {
-    rows: state.rows,
-    pha: state.lastPha || null
+/* ========== Batch + UI ========== */
+let images=[];
+let running=false;
+
+function setStatusAll(pre, ocr, gate, pha){
+  setDot($("stPre"), pre); setDot($("stOcr"), ocr); setDot($("stGate"), gate); setDot($("stPha"), pha);
+}
+function addBlobToBatch(blob, name="img.jpg"){
+  const url=URL.createObjectURL(blob);
+  images.push({name, blob, url});
+  $("kCount").textContent=String(images.length);
+  drawPreprocessFromBlob(blob).catch(()=>{});
+}
+function resetAll(){
+  images.forEach(x=>URL.revokeObjectURL(x.url));
+  images=[];
+  $("kCount").textContent="0"; $("kOk").textContent="0"; $("kFail").textContent="0";
+  $("rawDB").textContent="—"; $("rawBottom").textContent="—";
+  $("gateOut").textContent="GATE: waiting";
+  $("phaBadge").textContent="Confidence≈0%";
+  $("chainBox").textContent="(chưa có dữ liệu)";
+  $("phaBox").textContent="PHA: STOP\nThiếu dữ liệu (cần ≥ 3 ngày sạch).";
+  saveDays([]);
+  drawBlank();
+  setStatusAll("warn","warn","warn","warn");
+}
+function fillDemo(){
+  const start = $("startDate").value.trim() || todayISO();
+  const demo=[
+    {date:start, db2:"81", g7:["09","81","26","36"], g6:["586","074","775"]},
+    {date:addDaysISO(start,1), db2:"13", g7:["96","09","26","36"], g6:["243","887","936"]},
+    {date:addDaysISO(start,2), db2:"12", g7:["30","88","09","33"], g6:["003","214","087"]}
+  ];
+  saveDays(demo);
+  $("chainBox").textContent = demo.map(x=>`${x.date} | DB=${x.db2} | G7=${x.g7.join(" ")} | G6=${x.g6.join(" ")}`).join("\n");
+  const p=phaSafe(demo);
+  $("phaBadge").textContent=`Confidence≈${p.conf}%`;
+  $("phaBox").textContent=`PHA: ${p.pha}\n${p.note}`;
+  setStatusAll("ok","ok","ok", p.pha==="OK"?"ok":"bad");
+}
+
+/* ========== UI sync ========== */
+function syncUI(){
+  $("trimTopV").textContent = cfg.trimTop;
+  $("trimBotV").textContent = cfg.trimBot;
+  $("scaleV").textContent = cfg.scale.toFixed(1);
+
+  $("dbTopV").textContent = cfg.dbTop;
+  $("dbHV").textContent  = cfg.dbH;
+  $("botFromV").textContent = cfg.botFrom;
+  $("botHV").textContent   = cfg.botH;
+
+  $("trimTop").value = cfg.trimTop;
+  $("trimBot").value = cfg.trimBot;
+  $("scale").value   = cfg.scale;
+
+  $("dbTop").value = cfg.dbTop;
+  $("dbH").value   = cfg.dbH;
+  $("botFrom").value = cfg.botFrom;
+  $("botH").value    = cfg.botH;
+}
+
+/* ========== Run FULL V2 ========== */
+async function runFull(){
+  if(running) return;
+  running=true;
+
+  const startDateISO=$("startDate").value.trim();
+  if(!parseISODate(startDateISO)){ alert("StartDate sai format. Nhập YYYY-MM-DD (vd: 2026-02-28)."); running=false; return; }
+  if(images.length===0){ alert("Chưa có ảnh. Upload nhiều ảnh hoặc dùng Camera."); running=false; return; }
+
+  $("btnRun").disabled=true; $("btnUpload").disabled=true; $("btnCamera").disabled=true;
+
+  setStatusAll("warn","warn","warn","warn");
+  $("gateOut").textContent="GATE: running...";
+  $("rawDB").textContent="—"; $("rawBottom").textContent="—";
+
+  let okCount=0, failCount=0;
+  const dayItems=[];
+
+  const rescueOn = $("btnRescue").dataset.on==="1";
+  const levels = rescueOn ? cfg.rescueLevels : [{trimTop:cfg.trimTop, trimBot:cfg.trimBot, scale:cfg.scale}];
+
+  for(let i=0;i<images.length;i++){
+    const img=images[i];
+    let gated=null;
+
+    for(const lvl of levels){
+      cfg.trimTop=lvl.trimTop; cfg.trimBot=lvl.trimBot; cfg.scale=lvl.scale;
+
+      setDot($("stPre"),"warn");
+      await drawPreprocessFromBlob(img.blob);
+      setDot($("stPre"),"ok");
+
+      const H=can.height;
+      const dbY = Math.floor(H * (cfg.dbTop/100));
+      const dbH = Math.floor(H * (cfg.dbH/100));
+      const botY = Math.floor(H * (cfg.botFrom/100));
+      const botH = Math.floor(H * (cfg.botH/100));
+
+      const dbBlob = await cropCanvasToBlob(clamp(dbY,0,H-10), clamp(dbH,60,H));
+      const botBlob= await cropCanvasToBlob(clamp(botY,0,H-10), clamp(botH,120,H));
+
+      setDot($("stOcr"),"warn");
+      const oDB = await ocrBlob(dbBlob);
+      const oBT = await ocrBlob(botBlob);
+      $("rawDB").textContent = oDB.norm.slice(0,900) + (oDB.norm.length>900 ? "\n...\n" : "");
+      $("rawBottom").textContent = oBT.norm.slice(0,1200) + (oBT.norm.length>1200 ? "\n...\n" : "");
+      setDot($("stOcr"),"ok");
+
+      const g = gateV2(oDB.norm, oBT.norm, $("manualFix").value.trim());
+      gated=g;
+      if(g.ok) break;
+    }
+
+    if(gated && gated.ok){
+      okCount++;
+      dayItems.push({db2:gated.db2, g7:gated.g7, g6:gated.g6});
+      setDot($("stGate"),"ok");
+      $("gateOut").textContent =
+`GATE: OK (V2 2-ZONE)
+idx=${i+1}/${images.length}
+DB=${gated.db2}
+G7=${gated.g7.join(" ")}
+G6=${gated.g6.join(" ")}
+HardLock=ON`;
+    }else{
+      failCount++;
+      dayItems.push({db2:null, g7:null, g6:null, errs:(gated?gated.errs:["UNKNOWN"])});
+      setDot($("stGate"),"bad");
+      $("gateOut").textContent =
+`GATE: FAIL (V2 2-ZONE)
+idx=${i+1}/${images.length}
+errs=${(gated?gated.errs:["UNKNOWN"]).join(",")}
+Try: bật Rescue / chỉnh zone slider / dùng Manual Fix.`;
+    }
+
+    $("kOk").textContent=String(okCount);
+    $("kFail").textContent=String(failCount);
+    await sleep(120);
+  }
+
+  const locked=hardLockChain(startDateISO, dayItems);
+  if(!locked.ok){
+    setStatusAll("ok","ok","bad","bad");
+    $("phaBadge").textContent="Confidence≈0%";
+    $("chainBox").textContent="(HardLock FAIL) "+locked.errs.join(",");
+    $("phaBox").textContent=`PHA: STOP\nHardLock chuỗi lỗi: ${locked.errs.join(",")}\n=> Fix dữ liệu trước, không soi pha.`;
+    setDot($("stPha"),"bad");
+  }else{
+    const clean=locked.chain.filter(x=>x.db2&&x.g7&&x.g6);
+    saveDays(clean);
+    $("chainBox").textContent = clean.map(x=>`${x.date} | DB=${x.db2} | G7=${x.g7.join(" ")} | G6=${x.g6.join(" ")}`).join("\n");
+    const p=phaSafe(clean);
+    $("phaBadge").textContent=`Confidence≈${p.conf}%`;
+    $("phaBox").textContent=`PHA: ${p.pha}\n${p.note}`;
+    setDot($("stPha"), p.pha==="OK" ? "ok" : "bad");
+    setDot($("stGate"), failCount===0 ? "ok" : "warn");
+  }
+
+  $("btnRun").disabled=false; $("btnUpload").disabled=false; $("btnCamera").disabled=false;
+  running=false;
+}
+
+/* ========== Init ========== */
+function init(){
+  loadCfg();
+  drawBlank();
+  if(!$("startDate").value) $("startDate").value=todayISO();
+  $("btnRescue").dataset.on="1";
+
+  const bind = (id, key, isFloat=false)=>{
+    $(id).addEventListener("input", ()=>{
+      cfg[key]= isFloat ? parseFloat($(id).value) : parseInt($(id).value,10);
+      saveCfg();
+      try{ drawZoneOverlay(); }catch(e){}
+      syncUI();
+    });
   };
-  const blob = new Blob([JSON.stringify(payload,null,2)], {type:"application/json"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "bh_soi_db_export.json";
-  a.click();
-  URL.revokeObjectURL(url);
-});
+  bind("trimTop","trimTop");
+  bind("trimBot","trimBot");
+  bind("scale","scale", true);
+  bind("dbTop","dbTop");
+  bind("dbH","dbH");
+  bind("botFrom","botFrom");
+  bind("botH","botH");
+  syncUI();
 
-/* =========================
-   INIT
-========================= */
-loadState();
-renderTable();
-updateStatus();
-updateSavePill();
-setNote("Tip: nếu OCR fail thì dùng Manual. Khi đủ 3 ngày → CHECK PHA để khóa an toàn.");
+  const saved=loadDays();
+  $("kDays").textContent=String(saved.length);
+  if(saved.length){
+    $("chainBox").textContent = saved.map(x=>`${x.date} | DB=${x.db2} | G7=${x.g7.join(" ")} | G6=${x.g6.join(" ")}`).join("\n");
+    const p=phaSafe(saved);
+    $("phaBadge").textContent=`Confidence≈${p.conf}%`;
+    $("phaBox").textContent=`PHA: ${p.pha}\n${p.note}`;
+    setStatusAll("ok","ok","ok", p.pha==="OK"?"ok":"bad");
+  }else{
+    setStatusAll("warn","warn","warn","warn");
+  }
+
+  $("btnUpload").onclick=()=>$("file").click();
+  $("file").onchange=(e)=>{
+    const files=[...(e.target.files||[])];
+    files.forEach(f=>addBlobToBatch(f,f.name));
+    e.target.value="";
+  };
+  $("btnCamera").onclick=startCamera;
+  $("btnStopCam").onclick=stopCamera;
+  $("btnRun").onclick=runFull;
+  $("btnReset").onclick=()=>{ if(confirm("RESET SẠCH: xóa batch + xóa dữ liệu lưu. Chắc chắn?")) resetAll(); };
+  $("btnPaste").onclick=fillDemo;
+
+  $("btnRescue").onclick=()=>{
+    const on = $("btnRescue").dataset.on==="1";
+    $("btnRescue").dataset.on = on ? "0" : "1";
+    $("btnRescue").textContent = on ? "Rescue presets: OFF" : "Rescue presets: ON";
+  };
+}
+init();
 </script>
 </body>
 </html>
